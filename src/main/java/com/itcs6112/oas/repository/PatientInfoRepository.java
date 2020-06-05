@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository("patientInfoRepository")
 public interface PatientInfoRepository extends CrudRepository<PatientInfo, Integer> {
-
 }
