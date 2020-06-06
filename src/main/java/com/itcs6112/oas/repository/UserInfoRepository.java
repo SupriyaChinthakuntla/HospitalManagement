@@ -1,10 +1,11 @@
 package com.itcs6112.oas.repository;
 
 import com.itcs6112.oas.model.UserInfo;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("userInforRepository")
-public interface UserInfoRepository extends CrudRepository<UserInfo, Integer> {
+@Repository("userInfoRepository")
+public interface UserInfoRepository extends JpaRepository<UserInfo, Integer> {
 	UserInfo findByEmail(String email);
 }

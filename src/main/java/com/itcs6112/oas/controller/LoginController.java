@@ -1,19 +1,29 @@
 package com.itcs6112.oas.controller;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.itcs6112.oas.model.UserInfo;
 
 @Controller
 public class LoginController {
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView showRegistrationPage(ModelAndView modelAndView, UserInfo userInfo) {
-		modelAndView.addObject("userInfo", userInfo);
-		modelAndView.setViewName("login");
+	@GetMapping("/login")
+	public ModelAndView showLoginPage(ModelAndView modelAndView) {
+		// Check if there is an authenticated used
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		// Already authenticated, forward to dashboard
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			modelAndView.setViewName("forward:/dashboard");
+		}
+		// Not yet authenticated
+		else {
+			modelAndView.setViewName("login");
+		}
+
 		return modelAndView;
 	}
 	
