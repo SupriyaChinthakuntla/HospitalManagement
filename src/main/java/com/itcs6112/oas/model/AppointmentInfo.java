@@ -34,10 +34,15 @@ public class AppointmentInfo{
 	@NotEmpty	
 	private String reasonForVisit;
 	
-	@Column(name = "date")
+	@Column(name = "date_start")
 	@NotEmpty	
 	@DateTimeFormat
-	private Date date;
+	private Date date_start;
+	
+	@Column(name = "date_end")
+	@NotEmpty	
+	@DateTimeFormat
+	private Date date_end;
 	
 	@Column(name = "cancelled")
 	@NotEmpty	
