@@ -2,31 +2,31 @@ package com.itcs6112.oas.controller;
 
 // import java.sql.Date;
 import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.itcs6112.oas.service.UserInfoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.itcs6112.oas.repository.UserInfoRepository;
 import com.itcs6112.oas.model.UserInfo;
 
 @Controller 
 @RequestMapping(path = "/users") 
 public class UserInfoController {
-    
-    @Autowired 
-    private UserInfoRepository user_info_repository;
 
+    private UserInfoService userInfoService;
+
+    public UserInfoController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
+    }
 
     @PostMapping(path="/add") // Map ONLY POST Requests
     public @ResponseBody String addNewPatient(@RequestBody Map<String, Object> request_body){
         
         if(this.parse_request_body(request_body))
-            user_info_repository.save(this.create_new_user(request_body));
+            userInfoService.saveUser(this.create_new_user(request_body));
         else
             return "Received malformed request";
         return "Receieved request to add new user";
@@ -35,7 +35,7 @@ public class UserInfoController {
     @GetMapping(path = "/search")
     public @ResponseBody UserInfo searchForUser(@RequestBody Map<String, Object> request_body) {
         String email = (String) request_body.get("email");
-        for (UserInfo u: user_info_repository.findAll()){
+        for (UserInfo u: userInfoService.findAll()){
             if (u.getEmail().equals(email))
                 return u;
         }
@@ -44,7 +44,7 @@ public class UserInfoController {
 
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<UserInfo> getAllUsers() {
-        return user_info_repository.findAll();
+        return userInfoService.findAll();
     }
 
     private UserInfo create_new_user(Map<String,Object>request_body){

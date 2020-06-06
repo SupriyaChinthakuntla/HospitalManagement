@@ -33,9 +33,9 @@ public class RegisterController {
 		// Check if there is an authenticated used
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		// Already authenticated, forward to dashboard
+		// Already authenticated, forward to /
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			modelAndView.setViewName("forward:/dashboard");
+			modelAndView.setViewName("redirect:/");
 		}
 		// Not yet authenticated
 		else {

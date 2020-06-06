@@ -1,12 +1,15 @@
 package com.itcs6112.oas.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
@@ -22,21 +25,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private DataSource dataSource;
 
-	private final String USERS_QUERY = "select email, password, 'true' as enabled from user_info where email = ?";
-	private final String ROLES_QUERY = "select email, role from user_info where email = ?";
+	@Autowired
+	@Qualifier("userDetailsServiceImpl")
+	private UserDetailsService userDetailsService;
 
 	@Bean
-	public PasswordEncoder getPasswordEncoder() {
+	public PasswordEncoder passwordEncoder() {
 		return NoOpPasswordEncoder.getInstance();
 	}
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.jdbcAuthentication()
-			.usersByUsernameQuery(USERS_QUERY)
-			.authoritiesByUsernameQuery(ROLES_QUERY)
-			.dataSource(dataSource)
-			.passwordEncoder(getPasswordEncoder());
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setPasswordEncoder(passwordEncoder());
+		provider.setUserDetailsService(userDetailsService);
+		auth.authenticationProvider(provider);
 	}
 
 	@Override
@@ -58,7 +61,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .logoutSuccessUrl("/")
 			.and()
 			.rememberMe()
-			.tokenRepository(persistentTokenRepository())
+			.tokenRepository(persistentTokenRepository()).userDetailsService(userDetailsService)
 			.tokenValiditySeconds(3600)
 			.and()
 			.exceptionHandling()
