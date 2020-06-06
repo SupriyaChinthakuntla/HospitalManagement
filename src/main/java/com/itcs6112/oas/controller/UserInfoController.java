@@ -21,7 +21,7 @@ public class UserInfoController {
     private UserInfoService userInfoService;
     
     @PostMapping(path="/add") 
-    public @ResponseBody String addNewPatient(@RequestBody Map<String, Object> requestBody){
+    public @ResponseBody String aaddNewUser(@RequestBody Map<String, Object> requestBody){
         return userInfoService.addNewUser(requestBody)? "ADDED NEW USER" : "ENCOUNTERED ERROR ADDING NEW USER";
     }
     
@@ -31,7 +31,7 @@ public class UserInfoController {
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<UserInfo> retrieveAllUsers() {
+    public @ResponseBody Iterable<UserInfo> retrieveAllUsers(){
         return userInfoService.getAllUsers();
     }
 

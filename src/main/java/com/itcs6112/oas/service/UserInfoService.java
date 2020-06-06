@@ -5,10 +5,6 @@ import com.itcs6112.oas.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import com.itcs6112.oas.model.UserInfo;
-import com.itcs6112.oas.repository.UserInfoRepository;
-
 import java.util.Map;
 
 @Service("userInfoService")
@@ -41,20 +37,22 @@ public class UserInfoService {
     private boolean createNewUser(Map<String,Object>requestBody){
         // check to see if the request is properly formed, and create new user
         // Minimal error checking done
-        if (parseNewUserRequest(requestBody)){
+        if (checkNewUserRequest(requestBody)){
             UserInfo u = new UserInfo();
             u.setEmail((String)requestBody.get("email"));
             u.setFname((String)requestBody.get("fname"));
             u.setLname((String)requestBody.get("lname"));
             u.setRole((String)requestBody.get("role"));
             u.setPassword((String)requestBody.get("password"));
-            saveUser(u);
+            this.userInfoRepository.save(u);
+            // saveUser(u);
+            System.out.println(u);
             return true;
         }
         return false;
     }
     // helper function to determine if new user request has all data fields
-    private boolean parseNewUserRequest(Map<String,Object>requestBody){
+    private boolean checkNewUserRequest(Map<String,Object>requestBody){
         String [] l = {"email","fname","lname","role","password"};
         for (String k : l)
             if(!requestBody.containsKey(k))

@@ -1,7 +1,5 @@
 package com.itcs6112.oas.model;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,31 +9,31 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "patient_info")
-public class PatientInfo {
-
-	@Id
+@Table(name = "doctor_info")
+public class DoctorInfo{
+    
+    @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "patient_dob")
+	@Column(name = "specialty")
 	@NotEmpty
-	private Date patientDOB;
+	private String specialty;
 
 	public Integer getId() {
 		return id;
 	}
 
-	public Date getDOB() {
-		return patientDOB;
+	public String getSpecialty(){
+		return this.specialty;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public void setDOB(Date date) {
-		this.patientDOB = date;
+	public void setSpecialty(String specialty) {
+		this.specialty= specialty;
 	}
 
 }

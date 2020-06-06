@@ -35,18 +35,17 @@ public class PatientInfoService {
     private boolean createNewPatient(Map<String,Object>requestBody){
         // check to see if the request is properly formed, and create new patient 
         // Minimal error checking done
-        if (parseNewPatientRequest(requestBody)){
+        if (checkNewPatientRequest(requestBody)){
             PatientInfo p = new PatientInfo();
             p.setDOB((Date) requestBody.get("patient_dob"));
-            p.setId((Integer) requestBody.get("id"));
             savePatient(p);
             return true;
         }
         return false;
     }
     // helper function to determine if new patient request has all data fields
-    private boolean parseNewPatientRequest(Map<String,Object>requestBody){
-        String [] l = {"id","patient_dob"};
+    private boolean checkNewPatientRequest(Map<String,Object>requestBody){
+        String [] l = {"patient_dob"};
         for (String k : l)
             if(!requestBody.containsKey(k))
                 return false;

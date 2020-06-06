@@ -27,12 +27,12 @@ public class PatientInfoController {
     }
     
     @GetMapping(path = "/search")
-    public @ResponseBody Optional<PatientInfo> searchForUser(@RequestBody Map<String, Object> requestBody) {
+    public @ResponseBody Optional<PatientInfo> searchPatientById(@RequestBody Map<String, Object> requestBody) {
         return patientInfoService.findById((Integer) requestBody.get("id"));
     }
 
     @GetMapping(path = "/all")
-    public @ResponseBody Iterable<PatientInfo> retrieveAllUsers() {
+    public @ResponseBody Iterable<PatientInfo> retrieveAllPatients() {
         return patientInfoService.getAllPatients();
     }
 
