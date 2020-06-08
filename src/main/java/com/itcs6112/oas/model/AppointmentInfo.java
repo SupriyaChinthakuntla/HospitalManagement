@@ -61,9 +61,14 @@ public class AppointmentInfo{
 	public void setApptNotes(String notes){
 		this.notes = notes;
 	}
-	public void setDate(Date date){
-		this.date = date;
+	public void setStartDate(Date date){
+		this.date_start = date;
 	}
+	
+	public void setEndDate(Date date){
+		this.date_end= date;
+	}
+	
 	public void setCancelled(Boolean cancelled){
 		this.cancelled = cancelled;
 	}
@@ -80,8 +85,11 @@ public class AppointmentInfo{
 	public String getApptNotes(String notes){
 		return this.notes;
 	}
-	public Date getDate(Date date){
-		return this.date;
+	public Date getStartDate(Date date){
+		return this.date_start;
+	}
+	public Date getEndDate(Date date){
+		return this.date_end;
 	}
 	public Boolean getCancelled(Boolean cancelled){
 		return this.cancelled;

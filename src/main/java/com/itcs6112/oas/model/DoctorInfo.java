@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
@@ -20,8 +21,20 @@ public class DoctorInfo{
 	@NotEmpty
 	private String specialty;
 
+	// @Column(name = "user_info")
+	@OneToOne
+	private UserInfo userInfo;
+
 	public Integer getId() {
 		return id;
+	}
+
+	public UserInfo getUserInfo(){
+		return this.userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo){
+		this.userInfo = userInfo;
 	}
 
 	public String getSpecialty(){
@@ -34,6 +47,10 @@ public class DoctorInfo{
 
 	public void setSpecialty(String specialty) {
 		this.specialty= specialty;
+	}
+
+	public String getInfoString(){
+		return this.userInfo.getFname() + " " + this.userInfo.getLname() + " " + this.userInfo.getEmail() + ": " + this.specialty;
 	}
 
 }

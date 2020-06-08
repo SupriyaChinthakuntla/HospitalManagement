@@ -42,7 +42,8 @@ public class AppointmentInfoService{
             AppointmentInfo a = new AppointmentInfo();
             a.setApptNotes((String) requestBody.get("appt_notes")); 
             a.setCancelled((Boolean) requestBody.get("cancelled"));
-            a.setDate((Date) requestBody.get("date"));
+            a.setStartDate((Date) requestBody.get("date_start"));
+            a.setEndDate((Date) requestBody.get("date_end"));
             a.setDoctorId((Integer) requestBody.get("doctor_id")); 
             a.setPatientId((Integer) requestBody.get("patient_id")); 
             saveAppointment(a);
@@ -53,7 +54,7 @@ public class AppointmentInfoService{
     }
     // helper function to determine if new user request has all data fields
     private boolean checkNewApptRequest(Map<String,Object>requestBody){
-        String [] l = {"patient_id","doctor_id","appt_notes","reason_for_visit","cancelled","date"};
+        String [] l = {"patient_id","doctor_id","appt_notes","reason_for_visit","cancelled","date_start","date_end"};
         for (String k : l)
             if(!requestBody.containsKey(k))
                 return false;

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <h1>OAS Dashboard </h1>
+
+    <div th:if="${currentUserInfo}"
+        th:text="'Welcome ' + ${currentUserInfo.getFname()} + ' ' + ${currentUserInfo.getLname()} + ' (' + ${currentUserInfo.getEmail()} + ')'">
+    </div>
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+            <h4>Create New Doctor</h4>
+            <form autocomplete="off" action="#" th:action="@{/createDoctor}" th:object="${dummyUserInfo}" method="POST"
+                class="m-t" role="form" data-toggle="validator">
+
+                <input type="text" th:field="*{fname}" placeholder="First Name" class="form-control" required />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+
+                <input type="text" th:field="*{lname}" placeholder="Last Name" class="form-control" required />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+
+                <input type="email" th:field="*{email}" placeholder="Email Address" class="form-control" data-error="Invalid email address" required />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+
+                <input type="text" th:field="*{password}" placeholder="specialty" class="form-control" required />
+                <span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+
+        </div>
+
+
+        <button type="submit" class="btn btn-primary block full-width m-b">Create Doctor</button>
+
+        </form>
+
+    </div>
+    <div th:if="${allDoctors}" class="middle-box text-center loginscreen animated fadeInDown">
+        <h4>View all Doctors</h4>
+        <ul>
+            <li th:each="doc: ${allDoctors}" th:text="${doc.getInfoString()}"></li>
+        </ul>
+
+    </div>
+    <div th:if="${allPatients}" class="middle-box text-center loginscreen animated fadeInDown"></div>
+    <h4>View all Patients</h4>
+    <ul>
+        <li th:each="pat: ${allPatients}" th:text="${pat.getInfoString()}"></li>
+    </ul>
+
+    </div>
+    </div>
+
+
+</body>
+
+</html>
