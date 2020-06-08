@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang ="en"
+ xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<style>
+<!-- .dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+</style>
+</head>
+<body>
+
+<h2>Scheduling an appointment</h2>
+<p>Select doctor and book an appointment.</p>
+  <label for="speciality">Select speciality based on your requirement</label>
+  
+  <table>
+    <thead>
+        <tr>
+            <th> Title </th>
+            <th> Author </th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${doctors.empty}">
+            <td colspan="2"> No Books Available </td>
+        </tr>
+        <tr th:each="doctor : ${doctors}">
+            <td><span th:text="${doctor.name}"> Title </span></td>
+<!--             <td><span th:text="${doctor.speciality}"> Author </span></td>
+ -->        </tr>
+    </tbody>
+</table>
+
+<!-- <div class="dropdown">
+  <button onClick="myFunction()" class="dropbtn">Select Speciality</button>
+  <div id="myDropdown" class="dropdown-content"> 
+  
+<div layout:fragment="content">
+    <div class="list-group">
+        <a th:each="doctor : ${doctors}">
+        <input type="text" th:name="doctor.speciality"/>
+            <b th:text="${doctor.specialty}"></b>
+        </a>
+    </div>
+    </div>
+    </div>
+</div>
+ -->
+<br>  <label for="doctor">Select doctor</label>
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Select doctor</button>
+  <div id="myDropdown" class="dropdown-content"> 
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</div>
+
+ <br> <label for="apppointment">Choose available appointments of the doctor</label>
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Select Appointment</button>
+  <div id="myDropdown" class="dropdown-content"> 
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</div>
+
+<script>
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+} -->
+</script>
+</body>
+</html>

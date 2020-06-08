@@ -17,7 +17,7 @@ public class HomeController {
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserInfo userInfo = principal.getUserInfo();
         modelAndView.addObject("userInfo", userInfo);
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("patientHome");
         return modelAndView;
     }
 

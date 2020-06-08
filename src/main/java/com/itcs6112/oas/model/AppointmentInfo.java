@@ -62,7 +62,7 @@ public class AppointmentInfo{
 		this.notes = notes;
 	}
 	public void setDate(Date date){
-		this.date = date;
+		this.date_start = date;
 	}
 	public void setCancelled(Boolean cancelled){
 		this.cancelled = cancelled;
@@ -81,7 +81,7 @@ public class AppointmentInfo{
 		return this.notes;
 	}
 	public Date getDate(Date date){
-		return this.date;
+		return this.date_start;
 	}
 	public Boolean getCancelled(Boolean cancelled){
 		return this.cancelled;

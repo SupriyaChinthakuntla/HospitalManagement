@@ -2,10 +2,14 @@ package com.itcs6112.oas.service;
 
 import com.itcs6112.oas.model.DoctorInfo;
 import com.itcs6112.oas.repository.DoctorInfoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class DoctorInfoService{
@@ -17,8 +21,10 @@ public class DoctorInfoService{
         this.doctorInfoRepository = doctorInfoRepository; 
     }
     
-    public Iterable<DoctorInfo> getAllDoctors(){
-        return doctorInfoRepository.findAll();
+    public List<DoctorInfo> getAllDoctors(){
+    	List<DoctorInfo> doctorList = new ArrayList<>();
+        doctorInfoRepository.findAll().forEach(doctorList::add);
+        return doctorList;
     }
    
     public Optional<DoctorInfo> findById(Integer ID){

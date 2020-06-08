@@ -19,6 +19,18 @@ public class DoctorInfo{
 	@Column(name = "specialty")
 	@NotEmpty
 	private String specialty;
+	
+	@Column(name = "name")
+	@NotEmpty
+	private String name;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public Integer getId() {
 		return id;
@@ -26,6 +38,11 @@ public class DoctorInfo{
 
 	public String getSpecialty(){
 		return this.specialty;
+	}
+
+	@Override
+	public String toString() {
+		return "DoctorInfo [id=" + id + ", specialty=" + specialty + ", name=" + name + "]";
 	}
 
 	public void setId(Integer id) {
