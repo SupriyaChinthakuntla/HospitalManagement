@@ -31,8 +31,8 @@ public class DoctorInfoService{
         return doctorInfoRepository.findById(ID);
     }
     
-    public Optional<Iterable<DoctorInfo>> findDoctorsBySpecialty(String specialty){
-        return doctorInfoRepository.findBySpecialty(specialty);
+    public List<DoctorInfo> findDoctorsBySpeciality(String speciality){
+        return doctorInfoRepository.findBySpeciality(speciality);
     }
   
     public boolean addNewDoctor(Map<String,Object> requestBody){
@@ -49,13 +49,13 @@ public class DoctorInfoService{
         // Minimal error checking done
         if (checkNewDoctorRequest(requestBody)){
             DoctorInfo d = new DoctorInfo();
-            d.setSpecialty((String) requestBody.get("specialty"));
+            d.setSpeciality((String) requestBody.get("speciality"));
         }
         return false;
     }
     // helper function to determine if new patient request has all data fields 
     private boolean checkNewDoctorRequest(Map<String,Object>requestBody){
-        String [] l = {"specialty"};
+        String [] l = {"speciality"};
         for (String k : l)
             if(!requestBody.containsKey(k))
                 return false;

@@ -12,12 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping()
     public ModelAndView dashboard(ModelAndView modelAndView) {
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserInfo userInfo = principal.getUserInfo();
         modelAndView.addObject("userInfo", userInfo);
-        modelAndView.setViewName("patientHome");
+        modelAndView.setViewName("home");
         return modelAndView;
     }
 

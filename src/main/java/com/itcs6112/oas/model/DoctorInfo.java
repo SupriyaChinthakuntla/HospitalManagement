@@ -16,9 +16,9 @@ public class DoctorInfo{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "specialty")
+	@Column(name = "speciality")
 	@NotEmpty
-	private String specialty;
+	private String speciality;
 	
 	@Column(name = "name")
 	@NotEmpty
@@ -36,21 +36,21 @@ public class DoctorInfo{
 		return id;
 	}
 
-	public String getSpecialty(){
-		return this.specialty;
+	public String getSpeciality(){
+		return this.speciality;
 	}
 
 	@Override
 	public String toString() {
-		return "DoctorInfo [id=" + id + ", specialty=" + specialty + ", name=" + name + "]";
+		return "DoctorInfo [id=" + id + ", speciality=" + speciality + ", name=" + name + "]";
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public void setSpecialty(String specialty) {
-		this.specialty= specialty;
+	public void setSpeciality(String speciality) {
+		this.speciality= speciality;
 	}
 
 }
