@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "patient_info")
@@ -25,6 +23,7 @@ public class PatientInfo {
 	@Column(name = "user_info_id")
 	private Integer userInfoId;
 
+	//getters
 	public Integer getId() {
 		return id;
 	}
@@ -34,13 +33,14 @@ public class PatientInfo {
 	public Date getDOB() {
 		return patientDOB;
 	}
+
+	//setters
 	public void setUserInfoId(Integer userInfoId){
 		this.userInfoId = userInfoId;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
 	public void setDOB(Date date) {
 		this.patientDOB = date;
 	}

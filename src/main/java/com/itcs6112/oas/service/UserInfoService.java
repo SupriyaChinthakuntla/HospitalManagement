@@ -3,9 +3,7 @@ package com.itcs6112.oas.service;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.UserInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import java.util.Map;
 
 @Service("userInfoService")
 public class UserInfoService {

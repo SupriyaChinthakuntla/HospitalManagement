@@ -5,7 +5,6 @@ import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.DoctorInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -52,6 +51,7 @@ public class DoctorInfoService{
 	// public String getInfoString(Integer id){
 	public String getInfoString(DoctorInfo doc){
         UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
-		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname() + " " + userInfo.getEmail() + ": " + doc.getSpecialty() : "N/A";
+        return String.format("Doctor: %s %s | Email: %s", userInfo.getFname(),userInfo.getLname(),userInfo.getEmail());
+		// return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname() + " " + userInfo.getEmail() + ": " + doc.getSpecialty() : "N/A";
     }
 }

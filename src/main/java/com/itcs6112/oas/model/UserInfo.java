@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
 import org.springframework.data.annotation.Transient;
 
 @Entity
@@ -17,16 +18,12 @@ public class UserInfo {
 	private Integer id;
 
 	@Column(name = "email")
-	// @Email(message = "Please provide a valid e-mail")
-	// @NotEmpty(message = "Please provide an e-mail")
 	private String email;
-	
+
 	@Column(name = "fname")
-	// @NotEmpty(message = "Please provide your first name")
 	private String fname;
 
 	@Column(name = "lname")
-	// @NotEmpty(message = "Please provide your last name")
 	private String lname;
 
 	@Column(name = "role")
@@ -35,16 +32,13 @@ public class UserInfo {
 	@Column(name = "password")
 	@Transient
 	private String password;
-	
-	// @Transient
+
 	private String testing;
-	
-	public String getTesting(){
+
+	public String getTesting() {
 		return this.testing;
 	}
-	public void setTesting(String testing){
-		this.testing = testing;
-	}
+
 	public Integer getId() {
 		return this.id;
 	}
@@ -63,6 +57,11 @@ public class UserInfo {
 
 	public String getRole() {
 		return this.role;
+	}
+
+	// setters
+	public void setTesting(String testing) {
+		this.testing = testing;
 	}
 
 	public String getPassword() {

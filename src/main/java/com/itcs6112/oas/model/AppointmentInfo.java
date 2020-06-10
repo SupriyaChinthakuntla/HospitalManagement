@@ -22,7 +22,7 @@ public class AppointmentInfo{
 	@NotEmpty
 	private Integer patientInfoId;
 	
-	// @Column(name = "doctor_id")
+	@Column(name = "doctor_info_id")
 	@NotEmpty	
 	private Integer doctorInfoId;
 	
@@ -34,16 +34,16 @@ public class AppointmentInfo{
 	
 	@Column(name = "date_start")
 	@DateTimeFormat
-	private Date date_start;
+	private Date dateStart;
 	
 	@Column(name = "date_end")
 	@DateTimeFormat
-	private Date date_end;
+	private Date dateEnd;
 	
 	@Column(name = "cancelled")
 	private Boolean cancelled;
 	
-
+	//setters
 	public void setPatientInfoId(Integer id){
 		this.patientInfoId = id;
 	}
@@ -57,17 +57,16 @@ public class AppointmentInfo{
 		this.notes = notes;
 	}
 	public void setStartDate(Date date){
-		this.date_start = date;
+		this.dateStart = date;
 	}
-	
 	public void setEndDate(Date date){
-		this.date_end= date;
+		this.dateEnd= date;
 	}
-	
 	public void setCancelled(Boolean cancelled){
 		this.cancelled = cancelled;
 	}
 	
+	//getters
 	public Integer getPatientInfoId(){
 		return this.patientInfoId;
 	}
@@ -81,10 +80,10 @@ public class AppointmentInfo{
 		return this.notes;
 	}
 	public Date getStartDate(){
-		return this.date_start;
+		return this.dateStart;
 	}
 	public Date getEndDate(){
-		return this.date_end;
+		return this.dateEnd;
 	}
 	public Boolean getCancelled(){
 		return this.cancelled;
