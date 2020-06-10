@@ -1,6 +1,7 @@
 package com.itcs6112.oas.service;
 
 import com.itcs6112.oas.model.PatientInfo;
+import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.PatientInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,41 +15,37 @@ public class PatientInfoService {
     @Autowired
     private PatientInfoRepository patientInfoRepository;
     
+    @Autowired
+    private UserInfoService userInfoService;
+    
     public PatientInfoService(PatientInfoRepository patientInfoRepository) {
         this.patientInfoRepository = patientInfoRepository;
     }
     public Iterable<PatientInfo> getAllPatients(){
         return patientInfoRepository.findAll();
     }
-    public Optional<PatientInfo> findById(Integer ID){
-        return patientInfoRepository.findById(ID);
+    public PatientInfo findById(Integer ID){
+        return patientInfoRepository.findById(ID).orElse(null);
     }
-    public boolean addNewPatient(Map<String,Object> requestBody){
-        return createNewPatient(requestBody);
-    }
-
     public void savePatient(PatientInfo patient) {
         patientInfoRepository.save(patient);
     }
+    public String getPatientName(PatientInfo patient){
+        UserInfo userInfo = this.userInfoService.findById(patient.getUserInfoId());
+		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+    }
+
+	public String getPatientEmail(PatientInfo patient){
+        UserInfo userInfo = this.userInfoService.findById(patient.getUserInfoId());
+		return userInfo != null ? userInfo.getEmail() : "N/A";
+    }
+	public String getPatientDOB(PatientInfo patient){
+		return patient.getDOB().toString();
+    }
     
-    // returns true if a new patient is successfully created and added to the database
-    private boolean createNewPatient(Map<String,Object>requestBody){
-        // check to see if the request is properly formed, and create new patient 
-        // Minimal error checking done
-        if (checkNewPatientRequest(requestBody)){
-            PatientInfo p = new PatientInfo();
-            p.setDOB((Date) requestBody.get("patient_dob"));
-            savePatient(p);
-            return true;
-        }
-        return false;
+    public String getInfoString(PatientInfo pat){
+        UserInfo userInfo = this.userInfoService.findById(pat.getUserInfoId());
+		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname() + " " + userInfo.getEmail() + ": " + pat.getDOB().toString() : "N/A";
     }
-    // helper function to determine if new patient request has all data fields
-    private boolean checkNewPatientRequest(Map<String,Object>requestBody){
-        String [] l = {"patient_dob"};
-        for (String k : l)
-            if(!requestBody.containsKey(k))
-                return false;
-        return true;
-    }
+    
 }

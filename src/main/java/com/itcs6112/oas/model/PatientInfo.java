@@ -22,28 +22,25 @@ public class PatientInfo {
 	@Column(name = "patient_dob")
 	private Date patientDOB;
 	
-	@OneToOne
-	private UserInfo userInfo;
+	@Column(name = "user_info_id")
+	private Integer userInfoId;
 
 	public Integer getId() {
 		return id;
 	}
-	public UserInfo getUserInfo(){
-		return this.userInfo;
+	public Integer getUserInfoId(){
+		return this.userInfoId;
 	}
 	public Date getDOB() {
 		return patientDOB;
 	}
-	public void setUserInfo(UserInfo userInfo){
-		this.userInfo = userInfo;
+	public void setUserInfoId(Integer userInfoId){
+		this.userInfoId = userInfoId;
 	}
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getInfoString(){
-		return this.userInfo.getFname() + " " + this.userInfo.getLname() + " " + this.userInfo.getEmail() + ": " + this.patientDOB.toString();
-	}
 	public void setDOB(Date date) {
 		this.patientDOB = date;
 	}

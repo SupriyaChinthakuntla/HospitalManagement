@@ -1,5 +1,7 @@
 package com.itcs6112.oas.model;
 
+import java.beans.Transient;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,48 +11,50 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
+import com.itcs6112.oas.service.UserInfoService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 @Entity
 @Table(name = "doctor_info")
 public class DoctorInfo{
-    
+	
+	// @Autowired
+	// private UserInfoService userInfoService;
+
     @Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "specialty")
+	@Column(name = "speciality")
 	@NotEmpty
 	private String specialty;
 
-	// @Column(name = "user_info")
-	@OneToOne
-	private UserInfo userInfo;
+	@Column(name = "user_info_id")
+	private Integer userInfoId;
+
+
+	public Integer getUserInfoId(){
+		return this.userInfoId;
+	}
+	public void setUserInfoId(final Integer id) {
+		this.userInfoId = id;
+	}
 
 	public Integer getId() {
 		return id;
 	}
 
-	public UserInfo getUserInfo(){
-		return this.userInfo;
-	}
-
-	public void setUserInfo(UserInfo userInfo){
-		this.userInfo = userInfo;
-	}
-
-	public String getSpecialty(){
+	public String getSpecialty() {
 		return this.specialty;
 	}
 
-	public void setId(Integer id) {
+	public void setId(final Integer id) {
 		this.id = id;
 	}
 
-	public void setSpecialty(String specialty) {
+	public void setSpecialty(final String specialty) {
 		this.specialty= specialty;
-	}
-
-	public String getInfoString(){
-		return this.userInfo.getFname() + " " + this.userInfo.getLname() + " " + this.userInfo.getEmail() + ": " + this.specialty;
 	}
 
 }

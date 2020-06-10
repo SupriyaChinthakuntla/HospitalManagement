@@ -67,11 +67,11 @@ public class RegisterController {
 		} 
 		// If successful, send to login page to log in
 		else {
+			userInfoService.saveUser(userInfo);
 			PatientInfo p  = new PatientInfo();		// when we register this way, we are creating patients, create patient object
 			p.setDOB(new Date(12,12,1990));			// need to find a way to get the date here
-			p.setUserInfo(userInfo);				// associate the newly created user with patient data
+			p.setUserInfoId(userInfo.getId());				// associate the newly created user with patient data
 			userInfo.setRole("patient");
-			userInfoService.saveUser(userInfo);
 			patientInfoService.savePatient(p);
 			modelAndView.addObject("registrationSuccessMessage", "Patient successfully registered!");
 			modelAndView.setViewName("register");

@@ -21,10 +21,10 @@ public class AppointmentInfoController{
     @Autowired 
     private AppointmentInfoService appointmentInfoService;
     
-    @PostMapping(path="/add") 
-    public @ResponseBody String addNewDoctor(@RequestBody Map<String, Object> requestBody){
-        return appointmentInfoService.addNewAppointment(requestBody)? "ADDED NEW Appointment" : "ENCOUNTERED ERROR ADDING NEW Appointment";
-    }
+    // @PostMapping(path="/add") 
+    // public @ResponseBody String addNewDoctor(@RequestBody Map<String, Object> requestBody){
+    //     return appointmentInfoService.addNewAppointment(requestBody)? "ADDED NEW Appointment" : "ENCOUNTERED ERROR ADDING NEW Appointment";
+    // }
     
     @GetMapping(path = "/search")
     public @ResponseBody Optional<AppointmentInfo> searchDoctorById(@RequestBody Map<String, Object> requestBody) {

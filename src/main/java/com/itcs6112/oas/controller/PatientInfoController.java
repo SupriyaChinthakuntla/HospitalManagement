@@ -21,15 +21,15 @@ public class PatientInfoController {
     @Autowired 
     private PatientInfoService patientInfoService;
     
-    @PostMapping(path="/add") 
-    public @ResponseBody String addNewPatient(@RequestBody Map<String, Object> requestBody){
-        return patientInfoService.addNewPatient(requestBody)? "ADDED NEW PATIENT" : "ENCOUNTERED ERROR ADDING NEW PATIENT";
-    }
+    // @PostMapping(path="/add") 
+    // public @ResponseBody String addNewPatient(@RequestBody Map<String, Object> requestBody){
+    //     return patientInfoService.addNewPatient(requestBody)? "ADDED NEW PATIENT" : "ENCOUNTERED ERROR ADDING NEW PATIENT";
+    // }
     
-    @GetMapping(path = "/search")
-    public @ResponseBody Optional<PatientInfo> searchPatientById(@RequestBody Map<String, Object> requestBody) {
-        return patientInfoService.findById((Integer) requestBody.get("id"));
-    }
+    // @GetMapping(path = "/search")
+    // public @ResponseBody Optional<PatientInfo> searchPatientById(@RequestBody Map<String, Object> requestBody) {
+    //     return patientInfoService.findById((Integer) requestBody.get("id"));
+    // }
 
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<PatientInfo> retrieveAllPatients() {

@@ -1,6 +1,9 @@
 package com.itcs6112.oas.service;
 
 import com.itcs6112.oas.model.AppointmentInfo;
+import com.itcs6112.oas.model.DoctorInfo;
+import com.itcs6112.oas.model.PatientInfo;
+import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.AppointmentInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +16,56 @@ public class AppointmentInfoService{
 
     @Autowired
     private AppointmentInfoRepository appointmentInfoRepository;
+    @Autowired
+    private UserInfoService userInfoService;
+    @Autowired
+    private DoctorInfoService doctorInfoService;
+    @Autowired
+    private PatientInfoService patientInfoService;
     
     public AppointmentInfoService(AppointmentInfoRepository appointmentInfoRepository){
         this.appointmentInfoRepository = appointmentInfoRepository;
     }
-
-    public boolean addNewAppointment(Map<String,Object> requestBody){
-        return createNewAppointment(requestBody);
+    
+    public String getInfoString(AppointmentInfo appt){
+        DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorInfoId());
+        UserInfo userInfo_1 = this.userInfoService.findById(doctorInfo.getUserInfoId());
+        PatientInfo patientInfo = this.patientInfoService.findById(appt.getPatientInfoId());
+        UserInfo userInfo_2 = this.userInfoService.findById(patientInfo.getUserInfoId());
+        String doc_name = userInfo_1.getFname() + " " + userInfo_1.getLname();
+        String pat_name = userInfo_2.getFname() + " " + userInfo_2.getLname();
+        String date = appt.getStartDate().toString();
+        return String.format("Doctor: %s Patient: %s Date: %s",doc_name,pat_name,date);
+        // return String.format("Doctor: %s Patient: %S Date: %s", this.getDoctorName(pat),this.getPatientName(pat),this.getStartDate(pat));
     }
+    
+    public String getPatientName(AppointmentInfo appt){
+        PatientInfo patientInfo = this.patientInfoService.findById(appt.getDoctorInfoId());
+        UserInfo userInfo= this.userInfoService.findById(patientInfo.getUserInfoId());
+		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+    }
+    
+    public String getDoctorName(AppointmentInfo appt){
+        DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorInfoId());
+        UserInfo userInfo= this.userInfoService.findById(doctorInfo.getUserInfoId());
+		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+    }
+
+    public String getStartDate(AppointmentInfo doc){
+        // DoctorInfo doctorInfo = this.doctorInfoService.findById(doc.getDoctorInfoId());
+        // UserInfo userInfo= this.userInfoService.findById(doctorInfo.getUserInfoId());
+        // return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+        return doc.getStartDate().toString();
+    }
+
+	// public String getDoctorEmail(DoctorInfo doc){
+    //     UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
+	// 	return userInfo != null ? userInfo.getEmail() : "N/A";
+    // }
+	// public String getDoctorSpecialty(DoctorInfo doc){
+	// 	return doc.getSpecialty();
+    // }
+
     
     public Optional<AppointmentInfo> findById(Integer id) {
         return appointmentInfoRepository.findById(id);
@@ -34,30 +79,4 @@ public class AppointmentInfoService{
         appointmentInfoRepository.save(user);
     }
     
-    // returns true if a new user is successfully created and added to the database
-    private boolean createNewAppointment(Map<String,Object>requestBody){
-        // check to see if the request is properly formed, and create new user
-        // Minimal error checking done
-        if (checkNewApptRequest(requestBody)){
-            AppointmentInfo a = new AppointmentInfo();
-            a.setApptNotes((String) requestBody.get("appt_notes")); 
-            a.setCancelled((Boolean) requestBody.get("cancelled"));
-            a.setStartDate((Date) requestBody.get("date_start"));
-            a.setEndDate((Date) requestBody.get("date_end"));
-            a.setDoctorId((Integer) requestBody.get("doctor_id")); 
-            a.setPatientId((Integer) requestBody.get("patient_id")); 
-            saveAppointment(a);
-            System.out.println(a);
-            return true;
-        }
-        return false;
-    }
-    // helper function to determine if new user request has all data fields
-    private boolean checkNewApptRequest(Map<String,Object>requestBody){
-        String [] l = {"patient_id","doctor_id","appt_notes","reason_for_visit","cancelled","date_start","date_end"};
-        for (String k : l)
-            if(!requestBody.containsKey(k))
-                return false;
-        return true;
-    }
 }

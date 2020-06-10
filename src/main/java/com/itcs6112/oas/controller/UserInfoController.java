@@ -20,10 +20,10 @@ public class UserInfoController {
     @Autowired 
     private UserInfoService userInfoService;
     
-    @PostMapping(path="/add") 
-    public @ResponseBody String aaddNewUser(@RequestBody Map<String, Object> requestBody){
-        return userInfoService.addNewUser(requestBody)? "ADDED NEW USER" : "ENCOUNTERED ERROR ADDING NEW USER";
-    }
+    // @PostMapping(path="/add") 
+    // public @ResponseBody String aaddNewUser(@RequestBody Map<String, Object> requestBody){
+    //     return userInfoService.addNewUser(requestBody)? "ADDED NEW USER" : "ENCOUNTERED ERROR ADDING NEW USER";
+    // }
     
     @GetMapping(path = "/search")
     public @ResponseBody UserInfo searchForUser(@RequestBody Map<String, Object> request_body) {

@@ -18,45 +18,40 @@ public class AppointmentInfo{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "patient_id")
+	@Column(name = "patient_info_Id")
 	@NotEmpty
-	private Integer patientId;
+	private Integer patientInfoId;
 	
-	@Column(name = "doctor_id")
+	// @Column(name = "doctor_id")
 	@NotEmpty	
-	private Integer doctorId;
+	private Integer doctorInfoId;
 	
 	@Column(name = "appt_notes")
-	@NotEmpty	
 	private String notes;
 	
 	@Column(name = "reason_for_visit")
-	@NotEmpty	
 	private String reasonForVisit;
 	
 	@Column(name = "date_start")
-	@NotEmpty	
 	@DateTimeFormat
 	private Date date_start;
 	
 	@Column(name = "date_end")
-	@NotEmpty	
 	@DateTimeFormat
 	private Date date_end;
 	
 	@Column(name = "cancelled")
-	@NotEmpty	
 	private Boolean cancelled;
 	
 
+	public void setPatientInfoId(Integer id){
+		this.patientInfoId = id;
+	}
+	public void setDoctorInfoId(Integer id){
+		this.doctorInfoId = id;
+	}
 	public void setReasonForVisit(String reason){
 		this.reasonForVisit = reason;
-	}
-	public void setPatientId(Integer id){
-		this.patientId = id;
-	}
-	public void setDoctorId(Integer id){
-		this.doctorId = id;
 	}
 	public void setApptNotes(String notes){
 		this.notes = notes;
@@ -73,28 +68,25 @@ public class AppointmentInfo{
 		this.cancelled = cancelled;
 	}
 	
-	public String getReasonForVisit(String reason){
+	public Integer getPatientInfoId(){
+		return this.patientInfoId;
+	}
+	public Integer getDoctorInfoId(){
+		return this.doctorInfoId;
+	}
+	public String getReasonForVisit(){
 		return this.reasonForVisit;
 	}
-	public Integer getPatientId(Integer id){
-		return this.patientId;
-	}
-	public Integer getDoctorId(Integer id){
-		return this.doctorId;
-	}
-	public String getApptNotes(String notes){
+	public String getApptNotes(){
 		return this.notes;
 	}
-	public Date getStartDate(Date date){
+	public Date getStartDate(){
 		return this.date_start;
 	}
-	public Date getEndDate(Date date){
+	public Date getEndDate(){
 		return this.date_end;
 	}
-	public Boolean getCancelled(Boolean cancelled){
+	public Boolean getCancelled(){
 		return this.cancelled;
 	}
-
-
-
 }
