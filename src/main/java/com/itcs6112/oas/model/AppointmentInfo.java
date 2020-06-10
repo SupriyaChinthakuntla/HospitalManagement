@@ -18,11 +18,11 @@ public class AppointmentInfo{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name = "patient_info_Id")
+	@Column(name = "patient_id")
 	@NotEmpty
 	private Integer patientInfoId;
 	
-	@Column(name = "doctor_info_id")
+	@Column(name = "doctor_id")
 	@NotEmpty	
 	private Integer doctorInfoId;
 	

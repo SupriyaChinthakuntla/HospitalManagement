@@ -51,7 +51,7 @@ public class DoctorInfoService{
 	// public String getInfoString(Integer id){
 	public String getInfoString(DoctorInfo doc){
         UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
-        return String.format("Doctor: %s %s | Email: %s", userInfo.getFname(),userInfo.getLname(),userInfo.getEmail());
+        return String.format("Doctor: %s %s | Email: %s | Specialty: %s", userInfo.getFname(),userInfo.getLname(),userInfo.getEmail(), doc.getSpecialty());
 		// return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname() + " " + userInfo.getEmail() + ": " + doc.getSpecialty() : "N/A";
     }
 }

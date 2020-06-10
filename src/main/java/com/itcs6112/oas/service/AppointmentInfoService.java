@@ -26,10 +26,11 @@ public class AppointmentInfoService{
     }
     
     public String getInfoString(AppointmentInfo appt){
-        // System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-        // System.out.println(appt.getDoctorInfoId());
-        // System.out.println(appt.getPatientInfoId());
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
+        System.out.println(appt.getDoctorInfoId());
+        System.out.println(appt.getPatientInfoId());
         DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorInfoId());
+        System.out.println(doctorInfo.getUserInfoId());
         UserInfo userInfo_1 = this.userInfoService.findById(doctorInfo.getUserInfoId());
         PatientInfo patientInfo = this.patientInfoService.findById(appt.getPatientInfoId());
         UserInfo userInfo_2 = this.userInfoService.findById(patientInfo.getUserInfoId());
