@@ -4,7 +4,10 @@ import com.itcs6112.oas.model.AppointmentInfo;
 import com.itcs6112.oas.repository.AppointmentInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -25,9 +28,16 @@ public class AppointmentInfoService{
     public Optional<AppointmentInfo> findById(Integer id) {
         return appointmentInfoRepository.findById(id);
     }
+    
+    public List<AppointmentInfo> findByPatientId(Integer id) {
+        return appointmentInfoRepository.findByPatientId(id);
+    }
 
-    public Iterable<AppointmentInfo> getAllAppointments() {
-        return appointmentInfoRepository.findAll();
+    public List<AppointmentInfo> findAll() {
+    	List<AppointmentInfo> appointmentList = new ArrayList<>();  
+    	appointmentInfoRepository.findAll().forEach(appointmentList::add);
+
+        return appointmentList;
     }
 
     public void saveAppointment(AppointmentInfo user) {
@@ -40,9 +50,9 @@ public class AppointmentInfoService{
         // Minimal error checking done
         if (checkNewApptRequest(requestBody)){
             AppointmentInfo a = new AppointmentInfo();
-            a.setApptNotes((String) requestBody.get("appt_notes")); 
+//            a.setApptNotes((String) requestBody.get("appt_notes")); 
             a.setCancelled((Boolean) requestBody.get("cancelled"));
-            a.setDate((Date) requestBody.get("date"));
+//            a.setDate((Date) requestBody.get("date"));
             a.setDoctorId((Integer) requestBody.get("doctor_id")); 
             a.setPatientId((Integer) requestBody.get("patient_id")); 
             saveAppointment(a);

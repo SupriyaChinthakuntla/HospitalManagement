@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang ="en"
+ xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+</head>
+<style>
+div {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+</style>
+</head>
+<body>
+<table>
+    <thead>
+        <tr>
+            <th> List of your appointments </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="appointment : ${appointmentsList}">
+            <td><span th:text= "${appointment.date_start}"> Appointment start time </span></td>
+            <td><span th:text="${appointment.date_end}"> Appointment end time </span></td>
+            <td><span th:text= "${appointment.notes}"> Appointment Notes </span></td>
+            
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

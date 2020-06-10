@@ -18,6 +18,12 @@ public class AppointmentInfo{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	@Override
+	public String toString() {
+		return "AppointmentInfo [id=" + id + ", patientId=" + patientId + ", doctorId=" + doctorId + ", notes=" + notes
+				+ ", reasonForVisit=" + reasonForVisit + ", date_start=" + date_start + ", date_end=" + date_end
+				+ ", cancelled=" + cancelled + "]";
+	}
 	@Column(name = "patient_id")
 	@NotEmpty
 	private Integer patientId;
@@ -47,46 +53,71 @@ public class AppointmentInfo{
 	@Column(name = "cancelled")
 	@NotEmpty	
 	private Boolean cancelled;
-	
 
-	public void setReasonForVisit(String reason){
-		this.reasonForVisit = reason;
+	public Integer getId() {
+		return id;
 	}
-	public void setPatientId(Integer id){
-		this.patientId = id;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
-	public void setDoctorId(Integer id){
-		this.doctorId = id;
+
+	public Integer getPatientId() {
+		return patientId;
 	}
-	public void setApptNotes(String notes){
+
+	public void setPatientId(Integer patientId) {
+		this.patientId = patientId;
+	}
+
+	public Integer getDoctorId() {
+		return doctorId;
+	}
+
+	public void setDoctorId(Integer doctorId) {
+		this.doctorId = doctorId;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	public void setDate(Date date){
-		this.date_start = date;
+
+	public String getReasonForVisit() {
+		return reasonForVisit;
 	}
-	public void setCancelled(Boolean cancelled){
+
+	public void setReasonForVisit(String reasonForVisit) {
+		this.reasonForVisit = reasonForVisit;
+	}
+
+	public Date getDate_start() {
+		return date_start;
+	}
+
+	public void setDate_start(Date date_start) {
+		this.date_start = date_start;
+	}
+
+	public Date getDate_end() {
+		return date_end;
+	}
+
+	public void setDate_end(Date date_end) {
+		this.date_end = date_end;
+	}
+
+	public Boolean getCancelled() {
+		return cancelled;
+	}
+
+	public void setCancelled(Boolean cancelled) {
 		this.cancelled = cancelled;
 	}
 	
-	public String getReasonForVisit(String reason){
-		return this.reasonForVisit;
-	}
-	public Integer getPatientId(Integer id){
-		return this.patientId;
-	}
-	public Integer getDoctorId(Integer id){
-		return this.doctorId;
-	}
-	public String getApptNotes(String notes){
-		return this.notes;
-	}
-	public Date getDate(Date date){
-		return this.date_start;
-	}
-	public Boolean getCancelled(Boolean cancelled){
-		return this.cancelled;
-	}
-
 
 
 }

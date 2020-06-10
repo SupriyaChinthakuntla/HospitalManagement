@@ -4,25 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itcs6112.oas.model.DoctorAvailability;
 import com.itcs6112.oas.model.DoctorInfo;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.model.UserInfoPrincipal;
+import com.itcs6112.oas.service.DoctorAvailabilityService;
 import com.itcs6112.oas.service.DoctorInfoService;
 
 
@@ -31,6 +30,9 @@ public class DoctorInfoController{
     
     @Autowired 
     private DoctorInfoService doctorInfoService;
+    @Autowired 
+    private DoctorAvailabilityService doctorAvailabilityService;
+    
     public ModelAndView modelView;
     
     @GetMapping(path="/doctors")
@@ -43,9 +45,9 @@ public class DoctorInfoController{
         return modelAndView;
     }
     
-    @ModelAttribute
-    public void addAttributes(Model model) {
-    	model.addAttribute("doctors", doctorInfoService.getAllDoctors());
+    @ModelAttribute("doctors")
+    public List<DoctorInfo> addAttributes(Model model) {
+    	return doctorInfoService.getAllDoctors();
     }
     
     @PostMapping(path="/add") 
@@ -63,22 +65,46 @@ public class DoctorInfoController{
         return doctorInfoService.findDoctorsBySpeciality(speciality);
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/doctors/all")
     public List<DoctorInfo> retrieveAllDoctors() {
         return doctorInfoService.getAllDoctors();
     }
     
     @GetMapping("/doctorSearch")
-    public ModelAndView search(@ModelAttribute("doctor") DoctorInfo selectedInfo, Model model) {
-        System.out.println(selectedInfo.getSpeciality());
+    public ModelAndView doctorsWithSpeciality(DoctorInfo selectedInfo, Model model) {
         List<DoctorInfo> doc = new ArrayList<>();
     	doc =  this.searchDoctorBySpeciality(selectedInfo.getSpeciality());
     	model.addAttribute("doctorsWithSpeciality", doc);
-    	System.out.print(model);
     	return modelView;
-   
-  
     }
     
+    
+    @GetMapping("/availabilitySearch")
+    public ModelAndView doctorsWithAvailabilities(DoctorInfo selectedInfo, Model model) {
+        System.out.println(selectedInfo.getId());
+        System.out.println(selectedInfo.getName());
+
+        List<DoctorAvailability> doc = new ArrayList<>();
+    	doc = doctorAvailabilityService.findByDoctorId((Integer.parseInt(selectedInfo.getName())));
+    	model.addAttribute("doctorsWithAvailabilities", doc);
+    	return modelView;
+    }
+    
+    @PostMapping("/bookAppointment")
+    
+    public ModelAndView scheduleAppointment(DoctorInfo selectedInfo, Model model) {
+        System.out.println(selectedInfo.getId());
+        System.out.println(selectedInfo.getName());
+
+        List<DoctorAvailability> doc = new ArrayList<>();
+    	doc = doctorAvailabilityService.findByDoctorId((Integer.parseInt(selectedInfo.getName())));
+    	model.addAttribute("doctorsWithAvailabilities", doc);
+    	return modelView;
+    }
+    
+    @GetMapping(path = "/showAppointments")
+    public String showAppointments() {
+    	return "redirect:appointmentList";
+    }
 
 }

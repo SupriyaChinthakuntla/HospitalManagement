@@ -4,52 +4,67 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+</head>
+<style>
+div {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+</style>
 </head>
 <body>
-</head>
-<body>
-
-<label for="speciality">Scheduling an appointment</label>
+  <h3>Scheduling an appointment</h3>
+ <div class="form-group">
+  
  <form id="specialityForm" action="#" th:action="@{/doctorSearch}" th:object="${doctor}" method="get" class="m-t" role="form">
-
-<!--<form th:action="@{/doctorSearch}" th:object="${doctor}" method="post">
- -->     <select class="form-control" name="speciality">
+     <select class="form-control selectpicker" name="speciality">
         <option value="">Select Speciality</option>
         <option th:each="doctor : ${doctors}"
                 th:value="${doctor.speciality}"
-                th:text="${doctor.speciality}"></option>
+                th:text="${doctor.speciality}">
+                </option>
     </select>
-             <input id="specialitySubmit" type="submit" value="Search"/>
+             <input id="specialitySubmit" type="submit" value="Search For Doctors Available"/>
  </form>
- 
-<form id= "doctorForm" th:action="@{/do}" method="post">
+ </div>
+ <div>
+<form id= "doctorForm" action="#" th:action="@{/availabilitySearch}" th:object="${doctorSpeciality}" method="get" class="m-t" role="form">
      <select class="form-control" name="name">
         <option value="">Select Doctor</option>
         <option th:each="doctor : ${doctorsWithSpeciality}"
-                th:value="${doctor.name}"
-                th:text="${doctor.name}"></option>
+                th:value="${doctor.id}"   
+                th:text="${doctor.name}"
+                >
+                </option>
     </select>
-             <input id="doctorSubmit" type="button" value="Search"/>
+             <input id="doctorSubmit" type="submit" value="Search for Appointments Available"/>
  </form>
+ </div>
+ <div>
+ <form id= "availabilityForm" th:action="@{/bookAppointment}" th:object="${doctorAvailableTime}"  method="get" class="m-t" role="form">
+     <select class="form-control" name="availability">
+        <option value="">Select Available Time</option>
+        <option th:each="availability : ${doctorsWithAvailabilities}"
+                th:value="${availability.doctorAvailableTime}"
+                th:text="${availability.doctorAvailableTime}"
+                >
+                </option>
+    </select>
+             <input id="appointmentSubmit" type="submit" value="Schedule an appointment"/>
+ </form>
+</div>
 
-    <a th:href="@{/logout}">Logout</a>
-    <script>
-    $('#specialitySubmit').on('click', function() {
-   var form = $('#specialityForm');
-   $.ajax({
-      url: form.attr('action'),
-      data: form.serialize(),
-      type: post,
-      success: function(result) {
-          // Do something with the response.
-          // Might want to check for errors here.
-      }, error: function(error) {
-          // Here you can handle exceptions thrown by the server or your controller.
-      }
-   })
-}
-    </script>
+ <div class="margin-top20 text-center">
+                 <a th:href="@{/appointments}">Check past/upcoming appointments</a>
+            </div>    
+
+   <br> <a th:href="@{/logout}">Logout</a>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/bootstrap-select-1.13.9/dist/js/bootstrap-select.js}"></script>
 
 </body>
 </html>
