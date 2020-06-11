@@ -15,13 +15,22 @@ public class PatientInfoService {
     @Autowired
     private UserInfoService userInfoService;
     
+    private Iterable<PatientInfo> patients;
+    
     public PatientInfoService(PatientInfoRepository patientInfoRepository) {
         this.patientInfoRepository = patientInfoRepository;
     }
+    public void  fetchAllPatients(){
+        this.patients = patientInfoRepository.findAll();
+    }
+    
     public Iterable<PatientInfo> getAllPatients(){
-        return patientInfoRepository.findAll();
+        return this.patients;
     }
     public PatientInfo findById(Integer ID){
+        for(PatientInfo p : patients)
+            if(p.getId().equals(ID))
+                return p;
         return patientInfoRepository.findById(ID).orElse(null);
     }
     public void savePatient(PatientInfo patient) {

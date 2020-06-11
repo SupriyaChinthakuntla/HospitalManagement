@@ -36,6 +36,7 @@ public class DashboardController{
 
     @RequestMapping("/")
     public ModelAndView showDashboard(ModelAndView modelAndView) {
+
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if(principal.getUserInfo().getRole().equals("admin")){
             refreshDashboard(modelAndView);
@@ -69,6 +70,10 @@ public class DashboardController{
     }
 
     private ModelAndView refreshDashboard(ModelAndView modelAndView){
+        this.doctorInfoService.fetchAllDoctors();
+        this.patientInfoService.fetchAllPatients();
+        this.userInfoService.fetchAllUsers();
+        this.appointmentInfoService.fetchAllAppointments();
         // modelAndView.addObject("allPatients",this.patientInfoService.getAllPatients());
         // modelAndView.addObject("allDoctors",this.doctorInfoService.getAllDoctors());
         // for(PatientInfo u: this.patientInfoService.getAllPatients()){
