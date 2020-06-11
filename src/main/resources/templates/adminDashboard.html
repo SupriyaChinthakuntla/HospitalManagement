@@ -1,5 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>OAS Patient Registration</title> -->
+
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+    <!-- jQuery-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <!-- Bootstrap Validator plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
+</head>
 
     <body>
         <h1>OAS Dashboard </h1>
@@ -7,6 +24,9 @@
             th:text="'Welcome ' + ${currentUserInfo.getFname()} + ' ' + ${currentUserInfo.getLname()} + ' (' + ${currentUserInfo.getEmail()} + ')'">
         </div>
         <div>
+        	<div th:if="${doctorAddedSuccessfullyMsg}" class="alert alert-success" role="alert"
+                 th:text="${doctorAddedSuccessfullyMsg}"></div>
+                 
             <h4>Create New Doctor</h4>
             <form autocomplete="off" action="#" th:action="@{/createDoctor}" th:object="${dummyUserInfo}" method="POST">
                 <input type="text" th:field="*{fname}" placeholder="First Name" class="form-control" required />
