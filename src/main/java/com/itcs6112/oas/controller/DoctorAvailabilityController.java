@@ -36,12 +36,12 @@ public class DoctorAvailabilityController {
         return modelAndView;
     }
     
-    @GetMapping(path = "availability/{id}")
+    @GetMapping(path = "/availability/{id}")
     public List<DoctorAvailability> findByDoctorId(@PathVariable Integer id) {
     	 return doctorAvailabilityService.findByDoctorId(id);
     }
     
-    @GetMapping(path = "availability/all")
+    @GetMapping(path = "/availability/all")
     public @ResponseBody Iterable<DoctorAvailability> retrieveAllAvailableTime() {
         return doctorAvailabilityService.getAllAvailabilities();
     }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itcs6112.oas.model.AppointmentInfo;
 import com.itcs6112.oas.model.DoctorAvailability;
 import com.itcs6112.oas.model.DoctorInfo;
 import com.itcs6112.oas.model.UserInfo;
@@ -70,35 +71,10 @@ public class DoctorInfoController{
         return doctorInfoService.getAllDoctors();
     }
     
-    @GetMapping("/doctorSearch")
-    public ModelAndView doctorsWithSpeciality(DoctorInfo selectedInfo, Model model) {
-        List<DoctorInfo> doc = new ArrayList<>();
-    	doc =  this.searchDoctorBySpeciality(selectedInfo.getSpeciality());
-    	model.addAttribute("doctorsWithSpeciality", doc);
-    	return modelView;
-    }
-    
-    
-    @GetMapping("/availabilitySearch")
-    public ModelAndView doctorsWithAvailabilities(DoctorInfo selectedInfo, Model model) {
-        System.out.println(selectedInfo.getId());
-        System.out.println(selectedInfo.getName());
-
-        List<DoctorAvailability> doc = new ArrayList<>();
-    	doc = doctorAvailabilityService.findByDoctorId((Integer.parseInt(selectedInfo.getName())));
-    	model.addAttribute("doctorsWithAvailabilities", doc);
-    	return modelView;
-    }
     
     @PostMapping("/bookAppointment")
-    
-    public ModelAndView scheduleAppointment(DoctorInfo selectedInfo, Model model) {
-        System.out.println(selectedInfo.getId());
-        System.out.println(selectedInfo.getName());
-
-        List<DoctorAvailability> doc = new ArrayList<>();
-    	doc = doctorAvailabilityService.findByDoctorId((Integer.parseInt(selectedInfo.getName())));
-    	model.addAttribute("doctorsWithAvailabilities", doc);
+    public ModelAndView scheduleAppointment(AppointmentInfo appointmentInfo, Model model) {
+    // DO POST APPOINTMENT HERE
     	return modelView;
     }
     

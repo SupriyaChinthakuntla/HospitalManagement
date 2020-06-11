@@ -1,70 +1,113 @@
 <!DOCTYPE html>
-<html lang ="en"
- xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="UTF-8">
 </head>
 <style>
 div {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
+	padding-left: 20px;
 }
 </style>
+
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script type="text/javascript"> 
+
+
+function setSpeciality(doctorId) {
+	$.ajax({
+		type: 'GET',
+		url: '/availability/' + doctorId,
+		success: function(result) {
+			var s = '';
+			for(var i = 0; i < result.length; i++) {
+				s += '<option value="' + result[i].doctorId + '">' + result[i].doctorAvailableTime + '</option>';
+			}
+			$('#appointmentIdx').html(s);
+		}
+	});
+	
+}
+
+
+
+$(document).ready(function() {
+
+	$('#specialityIdx').on('change', function(){
+         var speciality = $(this).val();
+		$.ajax({
+			type: 'GET',
+			url: '/doctors/speciality/' + speciality,
+			success: function(result) {
+				
+				var s = '';
+				for(var i = 0; i < result.length; i++) {
+					s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+				}
+				$('#doctorIdx').html(s);
+				
+				if(result.length == 1) {
+					var doctorId = result[0].id;
+					setSpeciality(doctorId);
+					
+				}
+			}
+		
+		});
+	}); 
+
+	$('#doctorIdx').on('change', function(){
+		var doctorId = $(this).val();
+		setSpeciality(doctorId);
+	});
+
+});
+</script>
+
 </head>
 <body>
-  <h3>Scheduling an appointment</h3>
- <div class="form-group">
-  
- <form id="specialityForm" action="#" th:action="@{/doctorSearch}" th:object="${doctor}" method="get" class="m-t" role="form">
-     <select class="form-control selectpicker" name="speciality">
-        <option value="">Select Speciality</option>
-        <option th:each="doctor : ${doctors}"
-                th:value="${doctor.speciality}"
-                th:text="${doctor.speciality}">
-                </option>
-    </select>
-             <input id="specialitySubmit" type="submit" value="Search For Doctors Available"/>
- </form>
- </div>
- <div>
-<form id= "doctorForm" action="#" th:action="@{/availabilitySearch}" th:object="${doctorSpeciality}" method="get" class="m-t" role="form">
-     <select class="form-control" name="name">
-        <option value="">Select Doctor</option>
-        <option th:each="doctor : ${doctorsWithSpeciality}"
-                th:value="${doctor.id}"   
-                th:text="${doctor.name}"
-                >
-                </option>
-    </select>
-             <input id="doctorSubmit" type="submit" value="Search for Appointments Available"/>
- </form>
- </div>
- <div>
- <form id= "availabilityForm" th:action="@{/bookAppointment}" th:object="${doctorAvailableTime}"  method="get" class="m-t" role="form">
-     <select class="form-control" name="availability">
-        <option value="">Select Available Time</option>
-        <option th:each="availability : ${doctorsWithAvailabilities}"
-                th:value="${availability.doctorAvailableTime}"
-                th:text="${availability.doctorAvailableTime}"
-                >
-                </option>
-    </select>
-             <input id="appointmentSubmit" type="submit" value="Schedule an appointment"/>
- </form>
-</div>
+	<form autocomplete="on" id="appointmentForm"
+		th:action="@{/bookAppointment}" method="post" class="m-t" role="form">
 
- <div class="margin-top20 text-center">
-                 <a th:href="@{/appointments}">Check past/upcoming appointments</a>
-            </div>    
+		<h3>Scheduling an appointment</h3>
+		<div class="form-group">
 
-   <br> <a th:href="@{/logout}">Logout</a>
+			<p><label>Select Speciality</label> <select
+				class="form-control selectpicker" id="specialityIdx"
+				name="speciality">
+				<option value="">Select Speciality</option>
+				<option th:each="doctor : ${doctors}"
+					th:value="${doctor.speciality}" th:text="${doctor.speciality}">
+				</option> 
+			</select></p>
+			<p> <br> <label>Select Doctor based on specialities</label> <select
+				class="form-control" id="doctorIdx" name="name">
+				<option value="">Select Doctor</option>
+			</select>
+			</p>
+			<p> <br> <label>Select Doctor Available Time</label> <select
+				class="form-control" id="appointmentIdx" name="availability">
+				<option value="">Select Appointment</option>
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{assets/bootstrap-select-1.13.9/dist/js/bootstrap-select.js}"></script>
+			</select> </p>
+	
+
+		<p>
+			<label>Reason to visit</label> <input type="text" id="reasonToVisit"/>
+		</p>
+
+		<p>
+			<label>Appointment Notes</label> <input type="text" id="appointmentNotes"/>
+		</p>
+	</div>
+	</form>
+	<br>
+	<a th:href="@{/logout}">Logout</a>
+	<br>
+	<a th:href="@{/appointments}">Check past/upcoming appointments</a>
+	
 
 </body>
 </html>
