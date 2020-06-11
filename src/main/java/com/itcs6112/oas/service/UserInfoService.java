@@ -10,7 +10,8 @@ public class UserInfoService {
 
     @Autowired
     private UserInfoRepository userInfoRepository;
-    
+   
+    private Iterable<UserInfo> users;
     public UserInfoService(UserInfoRepository userInfoRepository) {
         this.userInfoRepository = userInfoRepository;
     }
@@ -20,11 +21,19 @@ public class UserInfoService {
     }
 
     public UserInfo findById(Integer id) {
+        for(UserInfo d : users)
+            if(d.getId().equals(id))
+                return d;
         return userInfoRepository.findById(id).orElse(null);
+        // return userInfoRepository.findById(id).orElse(null);
+    }
+    
+    public void fetchAllUsers() {
+        this.users = userInfoRepository.findAll();
     }
 
     public Iterable<UserInfo> getAllUsers() {
-        return userInfoRepository.findAll();
+        return this.users;
     }
 
     public void saveUser(UserInfo user) {

@@ -20,17 +20,14 @@ public class AppointmentInfoService{
     private DoctorInfoService doctorInfoService;
     @Autowired
     private PatientInfoService patientInfoService;
-    
+   
+    private Iterable<AppointmentInfo> appointments;
     public AppointmentInfoService(AppointmentInfoRepository appointmentInfoRepository){
         this.appointmentInfoRepository = appointmentInfoRepository;
     }
     
     public String getInfoString(AppointmentInfo appt){
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-        System.out.println(appt.getDoctorInfoId());
-        System.out.println(appt.getPatientInfoId());
         DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorInfoId());
-        System.out.println(doctorInfo.getUserInfoId());
         UserInfo userInfo_1 = this.userInfoService.findById(doctorInfo.getUserInfoId());
         PatientInfo patientInfo = this.patientInfoService.findById(appt.getPatientInfoId());
         UserInfo userInfo_2 = this.userInfoService.findById(patientInfo.getUserInfoId());
@@ -62,9 +59,13 @@ public class AppointmentInfoService{
     public Optional<AppointmentInfo> findById(Integer id) {
         return appointmentInfoRepository.findById(id);
     }
+    
+    public void fetchAllAppointments() {
+        this.appointments = appointmentInfoRepository.findAll();
+    }
 
     public Iterable<AppointmentInfo> getAllAppointments() {
-        return appointmentInfoRepository.findAll();
+        return this.appointments;
     }
 
     public void saveAppointment(AppointmentInfo user) {

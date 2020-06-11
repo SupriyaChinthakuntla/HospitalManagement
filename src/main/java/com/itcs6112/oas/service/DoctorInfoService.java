@@ -1,5 +1,6 @@
 package com.itcs6112.oas.service;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.itcs6112.oas.model.DoctorInfo;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.DoctorInfoRepository;
@@ -17,17 +18,25 @@ public class DoctorInfoService{
     @Autowired
     private UserInfoService userInfoService;
     
-    // private List<UserInfo> users;
+    private Iterable<DoctorInfo> doctors;
 
     public DoctorInfoService(DoctorInfoRepository doctorInfoRepository){
         this.doctorInfoRepository = doctorInfoRepository; 
     }
     
+    public void fetchAllDoctors(){
+        doctors = doctorInfoRepository.findAll();
+    }
+    
     public Iterable<DoctorInfo> getAllDoctors(){
-        return doctorInfoRepository.findAll();
+        // doctors = doctorInfoRepository.findAll();
+        return doctors;
     }
    
     public DoctorInfo findById(Integer ID){
+        for(DoctorInfo d : doctors)
+            if(d.getId().equals(ID))
+                return d;
         return doctorInfoRepository.findById(ID).orElse(null);
     }
     
