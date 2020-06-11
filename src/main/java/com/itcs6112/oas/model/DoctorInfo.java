@@ -28,7 +28,7 @@ public class DoctorInfo{
 	public Integer getId() {
 		return id;
 	}
-	public String getSpecialty() {
+	public String getSpeciality() {
 		return this.specialty;
 	}
 	

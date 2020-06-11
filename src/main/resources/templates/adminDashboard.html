@@ -12,7 +12,9 @@
                 <input type="text" th:field="*{fname}" placeholder="First Name" class="form-control" required />
                 <input type="text" th:field="*{lname}" placeholder="Last Name" class="form-control" required />
                 <input type="email" th:field="*{email}" placeholder="Email Address" class="form-control" required/>
-                <input type="text" th:field="*{testing}" placeholder="specialty" class="form-control" required />
+                <select th:if="${docSpecialtyList}"th:field="*{testing}">
+                    <option th:each="spec: ${docSpecialtyList}" th:value="${spec}" th:text="${spec}" ></option>
+                </select>
         
                 <button type="submit" class="btn btn-primary block full-width m-b">Create Doctor</button>
             </form>

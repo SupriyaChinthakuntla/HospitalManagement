@@ -1,5 +1,6 @@
 package com.itcs6112.oas.controller;
 
+import java.util.Arrays;
 import java.util.Map;
 
 import com.itcs6112.oas.model.AppointmentInfo;
@@ -72,6 +73,7 @@ public class DashboardController{
         // for(PatientInfo u: this.patientInfoService.getAllPatients()){
         //     System.out.println(u.getUserInfo().getEmail());
         // }
+        modelAndView.addObject("docSpecialtyList",Arrays.asList("Cardiologist", "Neurologist", "Orthopedist"));
         modelAndView.addObject("docInfoService",this.doctorInfoService);
         modelAndView.addObject("apptInfoService",this.appointmentInfoService);
         modelAndView.addObject("patInfoService",this.patientInfoService);
