@@ -57,7 +57,7 @@ public class DashboardController{
         
         doctorInfoService.saveDoctor(d);
         
-        modelAndView.addObject("doctorAddedSuccessfullyMsg", "Doctor created successfully");
+        modelAndView.addObject("doctorAddedSuccessfullyMsg", "Doctor created successfully!");
         return this.refreshDashboard(modelAndView);
     }
     @PostMapping("/createAppt")

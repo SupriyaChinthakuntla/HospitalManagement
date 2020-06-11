@@ -25,8 +25,8 @@
         </div>
         <div>
         	<div th:if="${doctorAddedSuccessfullyMsg}" class="alert alert-success" role="alert"
-                 th:text="${doctorAddedSuccessfullyMsg}"></div>
-                 
+                 th:text="${doctorAddedSuccessfullyMsg}">
+            </div>
             <h4>Create New Doctor</h4>
             <form autocomplete="off" action="#" th:action="@{/createDoctor}" th:object="${dummyUserInfo}" method="POST">
                 <input type="text" th:field="*{fname}" placeholder="First Name" class="form-control" required />
