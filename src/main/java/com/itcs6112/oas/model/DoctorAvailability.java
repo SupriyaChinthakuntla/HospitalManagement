@@ -1,6 +1,7 @@
 package com.itcs6112.oas.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,7 +29,7 @@ public class DoctorAvailability {
 	@Column(name = "available_time")
 	@NotEmpty
 	@DateTimeFormat
-	private Date doctorAvailableTime;
+	private Timestamp doctorAvailableTime;
 
 	public Integer getAvailability_id() {
 		return availability_id;
@@ -46,11 +47,11 @@ public class DoctorAvailability {
 		this.doctorId = doctorId;
 	}
 
-	public Date getDoctorAvailableTime() {
+	public Timestamp getDoctorAvailableTime() {
 		return doctorAvailableTime;
 	}
 
-	public void setDoctorAvailableTime(Date doctorAvailableTime) {
+	public void setDoctorAvailableTime(Timestamp doctorAvailableTime) {
 		this.doctorAvailableTime = doctorAvailableTime;
 	}
 

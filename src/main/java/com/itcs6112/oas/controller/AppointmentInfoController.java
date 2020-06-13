@@ -1,6 +1,7 @@
 package com.itcs6112.oas.controller;
 
 import java.util.List;
+
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,20 +23,22 @@ import com.itcs6112.oas.model.AppointmentInfo;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.model.UserInfoPrincipal;
 import com.itcs6112.oas.service.AppointmentInfoService;
+import com.itcs6112.oas.service.DoctorInfoService;
 
 @RestController 
 public class AppointmentInfoController {
     
     @Autowired 
     private AppointmentInfoService appointmentInfoService;
+    @Autowired 
+    private DoctorInfoService docInfoService;
     
 	@GetMapping("/appointments")
     public ModelAndView dashboard(ModelAndView modelAndView) {
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserInfo userInfo = principal.getUserInfo();
-        modelAndView.addObject("patientId", userInfo.getId());
         modelAndView.setViewName("appointmentList");
-        this.appointmentsList(userInfo.getId());
+        modelAndView.addObject("docInfoService",this.docInfoService);
+        this.appointmentsList(principal.getUserInfo().getId());
         return modelAndView;
     }
     
@@ -58,15 +61,14 @@ public class AppointmentInfoController {
     
     @GetMapping(path = "/appointments/{id}")
     public @ResponseBody List<AppointmentInfo> retrieveAllAppointmentsById(@PathVariable Integer id) {
-    	System.out.print("ssssssss*****" + id);
-    	System.out.print(appointmentInfoService.findByPatientId(id));
         return appointmentInfoService.findByPatientId(id);
     }
 
 
     @ModelAttribute("appointmentsList")
     public List<AppointmentInfo> appointmentsList(Integer id) {
-    	return this.retrieveAllAppointmentsById(28);
+    	 UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal(); 
+       	return this.retrieveAllAppointmentsById(principal.getUserInfo().getId());
     }
 
 

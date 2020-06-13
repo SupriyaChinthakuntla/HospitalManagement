@@ -31,6 +31,12 @@ public class DoctorInfoService{
         return doctorInfoRepository.findById(ID);
     }
     
+    public String getDoctorName(Integer doctorId){
+    	Optional<DoctorInfo> doc = this.findById(doctorId);
+    	DoctorInfo docInfo = doc.get();
+       return docInfo.getName();
+    }
+    
     public List<DoctorInfo> findDoctorsBySpeciality(String speciality){
         return doctorInfoRepository.findBySpeciality(speciality);
     }
