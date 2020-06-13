@@ -58,11 +58,9 @@ $(document).ready(function() {
 					s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
 				}
 				$('#doctorIdx').html(s);
-				
-				if(result.length == 1) {
 					var doctorId = result[0].id;
 					setSpeciality(doctorId);
-				}
+				
 			}
 		
 		});
@@ -112,12 +110,6 @@ $(document).ready(function() {
 				<label>Reason for Visit</label> 
 				<br>
 				<input type="text" id="reasonToVisit"/>
-			</p>
-
-			<p>
-				<label>Doctor's Notes</label> 
-				<br>
-				<input type="text" id="appointmentNotes"/>
 			</p>
 		
 			<button type="submit"
