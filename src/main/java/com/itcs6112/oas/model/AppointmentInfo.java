@@ -6,9 +6,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Table(name = "appointment_info")
@@ -33,12 +40,21 @@ public class AppointmentInfo{
 	private String reasonForVisit;
 	
 	@Column(name = "date_start")
-	@DateTimeFormat
-	private Date dateStart;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private Date startDate;
 	
 	@Column(name = "date_end")
-	@DateTimeFormat
-	private Date dateEnd;
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	private Date endDate;
+
+	@Transient
+	private String startDateString;
+	@Transient
+	private String endDateString;
+	public void setStartDateString(String dateStartString){this.startDateString = dateStartString;}
+	public void setEndDateString(String dateEndString){this.endDateString = dateEndString; }
+	public String getStartDateString(){return this.startDateString;}
+	public String getEndDateString(){return this.endDateString; }
 	
 	@Column(name = "cancelled")
 	private Boolean cancelled;
@@ -57,10 +73,10 @@ public class AppointmentInfo{
 		this.notes = notes;
 	}
 	public void setStartDate(Date date){
-		this.dateStart = date;
+		this.startDate = date;
 	}
 	public void setEndDate(Date date){
-		this.dateEnd= date;
+		this.endDate= date;
 	}
 	public void setCancelled(Boolean cancelled){
 		this.cancelled = cancelled;
@@ -80,12 +96,12 @@ public class AppointmentInfo{
 		return this.notes;
 	}
 	public Date getStartDate(){
-		return this.dateStart;
+		return this.startDate;
 	}
 	public Date getEndDate(){
-		return this.dateEnd;
+		return this.endDate;
 	}
-	public Boolean getCancelled(){
-		return this.cancelled;
-	}
+	// public Boolean getCancelled(){
+	// 	return this.cancelled;
+	// }
 }

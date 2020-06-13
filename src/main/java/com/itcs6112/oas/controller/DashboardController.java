@@ -1,6 +1,11 @@
 package com.itcs6112.oas.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 import com.itcs6112.oas.model.AppointmentInfo;
@@ -22,14 +27,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class DashboardController{
-    @Autowired 
+public class DashboardController {
+    @Autowired
     UserInfoService userInfoService;
-    @Autowired 
+    @Autowired
     DoctorInfoService doctorInfoService;
-    @Autowired 
+    @Autowired
     PatientInfoService patientInfoService;
-    @Autowired 
+    @Autowired
     AppointmentInfoService appointmentInfoService;
 
     private UserInfo currentUserInfo = null;
@@ -37,35 +42,42 @@ public class DashboardController{
     @RequestMapping("/")
     public ModelAndView showDashboard(ModelAndView modelAndView) {
 
-        UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal.getUserInfo().getRole().equals("admin")){
+        UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        if (principal.getUserInfo().getRole().equals("admin")) {
             refreshDashboard(modelAndView);
-        }
-        else
+        } else
             modelAndView.setViewName("userDashboard");
         return modelAndView;
     }
 
     @PostMapping("/createDoctor")
-    public ModelAndView createDoctorSubmit(ModelAndView modelAndView, @ModelAttribute UserInfo userInfo){ 
+    public ModelAndView createDoctorSubmit(ModelAndView modelAndView, @ModelAttribute UserInfo userInfo) {
         userInfoService.saveUser(userInfo);
         DoctorInfo d = new DoctorInfo();
-        d.setSpecialty(userInfo.getTesting());         // using password data field as placeholder to get the doctor specialty in
-        d.setUserInfoId(userInfo.getId());                        // associate this new doctor with UserInfo object populated by thymeleaf form
-        userInfo.setRole("doctor");                     // set this user's role to doctor
-        userInfo.setPassword("defaultpassword");        // set the password to a default (user would change at later date) 
-        
+        d.setSpecialty(userInfo.getTesting()); // using password data field as placeholder to get the doctor specialty
+                                               // in
+        d.setUserInfoId(userInfo.getId()); // associate this new doctor with UserInfo object populated by thymeleaf form
+        userInfo.setRole("doctor"); // set this user's role to doctor
+        userInfo.setPassword("defaultpassword"); // set the password to a default (user would change at later date)
+
         doctorInfoService.saveDoctor(d);
         
         modelAndView.addObject("doctorAddedSuccessfullyMsg", "Doctor created successfully!");
         return this.refreshDashboard(modelAndView);
     }
+
     @PostMapping("/createAppt")
-    public ModelAndView createAppointment(ModelAndView modelAndView, @ModelAttribute AppointmentInfo apptInfo){ 
-        UserInfo u = this.userInfoService.findById(apptInfo.getPatientInfoId());
-        PatientInfo p = this.patientInfoService.findById(apptInfo.getPatientInfoId());
-        System.out.println(this.userInfoService.getinfostring(u));
-        System.out.println(this.patientInfoService.getInfoString(p));
+    public ModelAndView createAppointment(ModelAndView modelAndView, @ModelAttribute AppointmentInfo apptInfo){
+        System.out.println("\n\n\n\n\n");
+        System.out.println(apptInfo.getPatientInfoId());
+        System.out.println(apptInfo.getDoctorInfoId());
+        System.out.println(apptInfo.getEndDate().toString());
+        System.out.println(apptInfo.getStartDate().toString());
+        System.out.println("\n\n\n\n\n");
+        
+        
+        this.appointmentInfoService.saveAppointment(apptInfo);
         return this.refreshDashboard(modelAndView);
     }
 

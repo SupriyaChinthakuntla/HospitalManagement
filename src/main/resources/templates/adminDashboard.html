@@ -39,7 +39,7 @@
                 <button type="submit" class="btn btn-primary block full-width m-b">Create Doctor</button>
             </form>
         </div>
-        <!-- <div th:if="${dummyApptInfo}">
+        <div th:if="${dummyApptInfo}">
             <h4>Create New Appt </h4>
             <form action="#" th:action="@{/createAppt}" th:object="${dummyApptInfo}" method="POST">
             <form autocomplete="off" th:action="@{/createAppt}" th:object="${dummyApptInfo}" method="POST">
@@ -49,9 +49,13 @@
                 <select th:field="*{patientInfoId}">
                     <option th:each="pat: ${patInfoService.getAllPatients()}" th:value="${pat.getId()}" th:text="${patInfoService.getPatientName(pat)}" ></option>
                 </select>
-                <button type="submit" class="btn btn-primary block full-width m-b">Create Doctor</button>
+                <input type="datetime-local" th:field="*{endDate}" required/>
+                <input type="datetime-local" th:field="*{startDate}" required/>
+                <!-- <input type="datetime-local" th:field="*{endDateString}" required/> -->
+                <!-- <input type="datetime-local" th:field="*{startDateString}" required/> -->
+                <button type="submit" class="btn btn-primary block full-width m-b">Create Appointment</button>
             </form>
-        </div> -->
+        </div>
 
         <div>
             <h4>Doctors</h4>
