@@ -22,9 +22,11 @@ div {
     </thead>
     <tbody>
         <tr th:each="appointment : ${appointmentsList}">
-            <td><span th:text= "${appointment.date_start}"> Appointment start time </span></td>
-            <td><span th:text="${appointment.date_end}"> Appointment end time </span></td>
-            <td><span th:text= "${appointment.notes}"> Appointment Notes </span></td>
+
+            <td><span th:each= "docName:${docInfoService.getDoctorName(appointment.doctorId)}" th:text="|Apppointment with doctor ${docName}|"> Doctor Name </span></td>
+            <td><span th:text= "|from ${appointment.date_start}|"> Appointment start time </span></td>
+            <td><span th:text="| to ${appointment.date_end}|"> Appointment end time </span></td>
+            <td><span th:text= "|and notes ${appointment.notes}|"> Appointment Notes </span></td>
             
         </tr>
     </tbody>
