@@ -2,19 +2,32 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-<meta charset="UTF-8">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>OAS Patient Registration</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+    <!-- jQuery-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+    <!-- Bootstrap Validator plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 </head>
+
 <style>
-div {
-	padding-left: 20px;
-}
+	div {
+		padding-left: 20px;
+	}
 </style>
 
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 <script type="text/javascript"> 
-
 
 function setSpeciality(doctorId) {
 	$.ajax({
@@ -28,9 +41,7 @@ function setSpeciality(doctorId) {
 			$('#appointmentIdx').html(s);
 		}
 	});
-	
 }
-
 
 
 $(document).ready(function() {
@@ -51,7 +62,6 @@ $(document).ready(function() {
 				if(result.length == 1) {
 					var doctorId = result[0].id;
 					setSpeciality(doctorId);
-					
 				}
 			}
 		
@@ -68,46 +78,60 @@ $(document).ready(function() {
 
 </head>
 <body>
-	<form autocomplete="on" id="appointmentForm"
+<div align="center">
+	<form autocomplete="on" id="appointmentForm" 
 		th:action="@{/bookAppointment}" method="post" class="m-t" role="form">
 
-		<h3>Scheduling an appointment</h3>
-		<div class="form-group">
+		<h3>Schedule an Appointment</h3>
+		<div class="col-sm-4 form-group">
 
-			<p><label>Select Speciality</label> <select
-				class="form-control selectpicker" id="specialityIdx"
-				name="speciality">
-				<option value="">Select Speciality</option>
+			<p><label>Speciality</label> 
+			<select class="form-control selectpicker" id="specialityIdx" name="speciality">
+				<option value="">Select...</option>
 				<option th:each="doctor : ${doctors}"
 					th:value="${doctor.speciality}" th:text="${doctor.speciality}">
 				</option> 
-			</select></p>
-			<p> <br> <label>Select Doctor based on specialities</label> <select
-				class="form-control" id="doctorIdx" name="name">
-				<option value="">Select Doctor</option>
 			</select>
 			</p>
-			<p> <br> <label>Select Doctor Available Time</label> <select
-				class="form-control" id="appointmentIdx" name="availability">
-				<option value="">Select Appointment</option>
-
-			</select> </p>
+			
+			<p>
+			<label>Doctor</label> 
+				<select class="form-control" id="doctorIdx" name="name">
+				<option value="">Select...</option>
+				</select>
+			</p>
+			
+			<p>
+			<label>Date and Time</label> 
+				<select class="form-control" id="appointmentIdx" name="availability">
+				<option value="">Select...</option>
+			</select> 
+			</p>
 	
+			<p>
+				<label>Reason for Visit</label> 
+				<br>
+				<input type="text" id="reasonToVisit"/>
+			</p>
 
-		<p>
-			<label>Reason to visit</label> <input type="text" id="reasonToVisit"/>
-		</p>
-
-		<p>
-			<label>Appointment Notes</label> <input type="text" id="appointmentNotes"/>
-		</p>
-	</div>
+			<p>
+				<label>Doctor's Notes</label> 
+				<br>
+				<input type="text" id="appointmentNotes"/>
+			</p>
+		
+			<button type="submit"
+	            class="btn btn-primary block full-width m-b">Confirm
+	        </button>
+		</div>
 	</form>
-	<br>
-	<a th:href="@{/logout}">Logout</a>
-	<br>
-	<a th:href="@{/appointments}">Check past/upcoming appointments</a>
 	
-
+	<a th:href="@{/appointments}">View Past and Future Appointments</a>
+	<br>
+	
+	<a th:href="@{/logout}">Logout</a>
+	
+	
+</div>
 </body>
 </html>
