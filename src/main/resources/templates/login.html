@@ -19,56 +19,54 @@
 </head>
 
 <body class="gray-bg">
-<div class="middle-box text-center loginscreen animated fadeInDown">
-    <div class="col-sm-4"></div>
-    <div class="col-sm-4">
-        <h4>OAS Login</h4>
-        <form autocomplete="off" action="#" th:action="@{/login}" method="post" class="m-t" role="form"
-              data-toggle="validator">
-
-            <div th:if="${param.error}" class="alert alert-danger" role="alert">The email or password was incorrect!</div>
-
-            <!-- Email -->
-            <div class="form-group input-group has-feedback">
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-envelope"></span>
-                </span>
-                <input type="email" id="email" name="email"
-                       placeholder="Email Address" class="form-control"
-                       data-error="This email address is invalid" required autofocus />
-                <span class="glyphicon form-control-feedback"
-                      aria-hidden="true"></span>
-            </div>
-
-            <!-- Password -->
-            <div class="form-group input-group has-feedback">
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-lock"></span>
-                </span>
-                <input type="password" id="password" name="password"
-                       placeholder="Password" class="form-control"
-                       data-error="This password is invalid" required />
-                <span class="glyphicon form-control-feedback"
-                      aria-hidden="true"></span>
-            </div>
-
-            <!-- Remember me -->
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" name="remember-me">Remember Me</input>
-                </label>
-            </div>
-
-            <!-- Log in -->
-            <button type="submit" class="btn btn-primary block full-width m-b">Log in</button>
-
-            <!-- Register -->
-            <div class="margin-top20 text-center">
-                New patient? <a th:href="@{/register}">Create an account</a>
-            </div>
-        </form>
-    </div>
-    <div class="col-sm-4"></div>
-</div>
+	<div align="center">
+		<div class="col-sm-4 middle-box text-center loginscreen animated fadeInDown">
+	        <h4>OAS Login</h4>
+	        <form autocomplete="off" action="#" th:action="@{/login}" method="post" class="m-t" role="form"
+	              data-toggle="validator">
+	
+	            <div th:if="${param.error}" class="alert alert-danger" role="alert">The email or password was incorrect!</div>
+	
+	            <!-- Email -->
+	            <div class="form-group input-group has-feedback">
+	                <span class="input-group-addon">
+	                    <span class="glyphicon glyphicon-envelope"></span>
+	                </span>
+	                <input type="email" id="email" name="email"
+	                       placeholder="Email Address" class="form-control"
+	                       data-error="This email address is invalid" required autofocus />
+	                <span class="glyphicon form-control-feedback"
+	                      aria-hidden="true"></span>
+	            </div>
+	
+	            <!-- Password -->
+	            <div class="form-group input-group has-feedback">
+	                <span class="input-group-addon">
+	                    <span class="glyphicon glyphicon-lock"></span>
+	                </span>
+	                <input type="password" id="password" name="password"
+	                       placeholder="Password" class="form-control"
+	                       data-error="This password is invalid" required />
+	                <span class="glyphicon form-control-feedback"
+	                      aria-hidden="true"></span>
+	            </div>
+	
+	            <!-- Remember me -->
+	            <div class="checkbox mb-3">
+	                <label>
+	                    <input type="checkbox" name="remember-me">Remember Me</input>
+	                </label>
+	            </div>
+	
+	            <!-- Log in -->
+	            <button type="submit" class="btn btn-primary block full-width m-b">Log in</button>
+	
+	            <!-- Register -->
+	            <div class="margin-top20 text-center">
+	                New patient? <a th:href="@{/register}">Create an account</a>
+	            </div>
+	        </form>
+	    </div>
+	</div>
 </body>
 </html>
