@@ -42,6 +42,7 @@ public class DoctorInfoController{
         UserInfo userInfo = principal.getUserInfo();
         modelAndView.addObject("user", userInfo);
         modelAndView.setViewName("patientHome");
+        this.doctorInfoService.getDoctorName(66);
         modelView = modelAndView;
         return modelAndView;
     }

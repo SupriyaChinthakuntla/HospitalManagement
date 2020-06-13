@@ -42,7 +42,7 @@ public class DoctorAvailabilityController {
     }
     
     @GetMapping(path = "/availability/all")
-    public @ResponseBody Iterable<DoctorAvailability> retrieveAllAvailableTime() {
+    public @ResponseBody List<DoctorAvailability> retrieveAllAvailableTime() {
         return doctorAvailabilityService.getAllAvailabilities();
     }
      

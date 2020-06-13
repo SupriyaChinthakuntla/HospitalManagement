@@ -1,6 +1,7 @@
 package com.itcs6112.oas.service;
 
 import com.itcs6112.oas.model.DoctorInfo;
+import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.DoctorInfoRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class DoctorInfoService{
    
     public Optional<DoctorInfo> findById(Integer ID){
         return doctorInfoRepository.findById(ID);
+    }
+    
+    public String getDoctorName(Integer doctorId){
+    	Optional<DoctorInfo> doc = this.findById(doctorId);
+    	DoctorInfo docInfo = doc.get();
+       return docInfo.getName();
     }
     
     public List<DoctorInfo> findDoctorsBySpeciality(String speciality){

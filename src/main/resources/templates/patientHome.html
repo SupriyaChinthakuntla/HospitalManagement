@@ -8,6 +8,14 @@
 div {
 	padding-left: 20px;
 }
+    select {
+        width: 150px;
+        margin: 10px;
+    }
+    select:focus {
+        min-width: 150px;
+        width: auto;
+    }    
 </style>
 
 <script
@@ -48,11 +56,8 @@ $(document).ready(function() {
 				}
 				$('#doctorIdx').html(s);
 				
-				if(result.length == 1) {
 					var doctorId = result[0].id;
 					setSpeciality(doctorId);
-					
-				}
 			}
 		
 		});
@@ -98,16 +103,15 @@ $(document).ready(function() {
 			<label>Reason to visit</label> <input type="text" id="reasonToVisit"/>
 		</p>
 
-		<p>
+	<!-- 	<p>
 			<label>Appointment Notes</label> <input type="text" id="appointmentNotes"/>
-		</p>
+		</p> -->
 	</div>
 	</form>
 	<br>
-	<a th:href="@{/logout}">Logout</a>
-	<br>
 	<a th:href="@{/appointments}">Check past/upcoming appointments</a>
+		<br>
+	<a th:href="@{/logout}">Logout</a>
 	
-
 </body>
 </html>
