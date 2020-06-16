@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-@Repository("appointmentInfoRepository")
 public interface AppointmentInfoRepository extends CrudRepository<AppointmentInfo, Integer> {
 	List<AppointmentInfo> findByPatientId(Integer patientId);
 

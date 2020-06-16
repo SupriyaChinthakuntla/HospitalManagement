@@ -20,23 +20,18 @@ import com.itcs6112.oas.repository.DoctorAvailabilityRepository;
 @Service
 public class DoctorAvailabilityService {
 
-	 @Autowired
-	    private DoctorAvailabilityRepository doctorAvailabilityRepository;
-	    
-	    public DoctorAvailabilityService(DoctorAvailabilityRepository doctorAvailabilityRepository){
-	        this.doctorAvailabilityRepository = doctorAvailabilityRepository; 
-	    }
-	    
-	
-	    public List<DoctorAvailability> getAllAvailabilities(){
-	    	List<DoctorAvailability> doctorList = new ArrayList<>();
-	    	doctorAvailabilityRepository.findAll().forEach(doctorList::add);
-	        return doctorList;
-	    }
-	    
-	    public List<DoctorAvailability> findByDoctorId(Integer doctorId) {
-	    	return doctorAvailabilityRepository.findByDoctorId(doctorId);
-	    }
-	    
-	      
+    @Autowired
+    private DoctorAvailabilityRepository doctorAvailabilityRepository;
+
+    public List<DoctorAvailability> getAllAvailabilities() {
+        List<DoctorAvailability> doctorList = new ArrayList<>();
+        doctorAvailabilityRepository.findAll().forEach(doctorList::add);
+        return doctorList;
+    }
+
+    public List<DoctorAvailability> findByDoctorId(Integer doctorId) {
+        return doctorAvailabilityRepository.findByDoctorId(doctorId);
+    }
+
+
 }

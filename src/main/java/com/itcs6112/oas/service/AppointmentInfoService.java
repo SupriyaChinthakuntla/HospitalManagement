@@ -16,15 +16,17 @@ public class AppointmentInfoService{
 
     @Autowired
     private AppointmentInfoRepository appointmentInfoRepository;
-    
-    public AppointmentInfoService(AppointmentInfoRepository appointmentInfoRepository){
-        this.appointmentInfoRepository = appointmentInfoRepository;
-    }
 
     public boolean addNewAppointment(Map<String,Object> requestBody){
         return createNewAppointment(requestBody);
     }
-    
+
+    public AppointmentInfo createAppointment(AppointmentInfo appointmentInfo) {
+        return appointmentInfoRepository.save(appointmentInfo);
+    }
+
+    public void deleteAppointment(Integer id) { appointmentInfoRepository.deleteById(id); }
+
     public Optional<AppointmentInfo> findById(Integer id) {
         return appointmentInfoRepository.findById(id);
     }

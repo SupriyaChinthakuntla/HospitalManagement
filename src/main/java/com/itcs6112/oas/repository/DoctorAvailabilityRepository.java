@@ -9,8 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.itcs6112.oas.model.DoctorAvailability;
 
-@Repository("doctorAvailabilityRepository")
-
 public interface DoctorAvailabilityRepository extends CrudRepository<DoctorAvailability, Integer> {
 	List<DoctorAvailability> findByDoctorId(Integer doctorId);
 	      

@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import java.util.Date;
+
+import com.itcs6112.oas.service.DoctorInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -25,34 +28,37 @@ public class AppointmentInfo{
 				+ ", cancelled=" + cancelled + "]";
 	}
 	@Column(name = "patient_id")
-	@NotEmpty
 	private Integer patientId;
 	
 	@Column(name = "doctor_id")
-	@NotEmpty	
 	private Integer doctorId;
 	
 	@Column(name = "appt_notes")
-	@NotEmpty	
 	private String notes;
 	
 	@Column(name = "reason_for_visit")
-	@NotEmpty	
 	private String reasonForVisit;
 	
 	@Column(name = "date_start")
-	@NotEmpty	
 	@DateTimeFormat
 	private Date date_start;
 	
 	@Column(name = "date_end")
-	@NotEmpty	
 	@DateTimeFormat
 	private Date date_end;
 	
-	@Column(name = "cancelled")
-	@NotEmpty	
+	@Column(name = "cancelled", columnDefinition = "boolean default false")
 	private Boolean cancelled;
+
+	public AppointmentInfo(Integer patientId, Integer doctorId, String reasonForVisit, Date date_start) {
+		this.patientId = patientId;
+		this.doctorId = doctorId;
+		this.reasonForVisit = reasonForVisit;
+		this.date_start = date_start;
+	}
+
+	public AppointmentInfo() {
+	}
 
 	public Integer getId() {
 		return id;
@@ -117,7 +123,5 @@ public class AppointmentInfo{
 	public void setCancelled(Boolean cancelled) {
 		this.cancelled = cancelled;
 	}
-	
-
 
 }

@@ -16,11 +16,7 @@ public class DoctorInfoService{
 
     @Autowired
     private DoctorInfoRepository doctorInfoRepository;
-    
-    public DoctorInfoService(DoctorInfoRepository doctorInfoRepository){
-        this.doctorInfoRepository = doctorInfoRepository; 
-    }
-    
+
     public List<DoctorInfo> getAllDoctors(){
     	List<DoctorInfo> doctorList = new ArrayList<>();
         doctorInfoRepository.findAll().forEach(doctorList::add);

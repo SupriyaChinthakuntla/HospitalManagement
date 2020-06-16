@@ -36,7 +36,7 @@ function setSpeciality(doctorId) {
 		success: function(result) {
 			var s = '';
 			for(var i = 0; i < result.length; i++) {
-				s += '<option value="' + result[i].doctorId + '">' + result[i].doctorAvailableTime + '</option>';
+				s += '<option value="' + result[i].doctorAvailableTime + '">' + result[i].doctorAvailableTime + '</option>';
 			}
 			$('#appointmentIdx').html(s);
 		}
@@ -78,7 +78,7 @@ $(document).ready(function() {
 <body>
 <div align="center">
 	<form autocomplete="on" id="appointmentForm" 
-		th:action="@{/bookAppointment}" method="post" class="m-t" role="form">
+		th:action="@{/appointments}" th:object="${appointmentForm}" method="post" class="m-t" role="form">
 
 		<h3>Schedule an Appointment</h3>
 		<div class="col-sm-4 form-group">
@@ -94,22 +94,22 @@ $(document).ready(function() {
 			
 			<p>
 			<label>Doctor</label> 
-				<select class="form-control" id="doctorIdx" name="name">
+				<select class="form-control" id="doctorIdx" name="name" th:field="*{doctorId}">
 				<option value="">Select...</option>
 				</select>
 			</p>
 			
 			<p>
 			<label>Date and Time</label> 
-				<select class="form-control" id="appointmentIdx" name="availability">
+				<select class="form-control" id="appointmentIdx" name="availability" th:field="*{doctorAvailableTime}">
 				<option value="">Select...</option>
 			</select> 
 			</p>
 	
 			<p>
-				<label>Reason for Visit</label> 
+				<label>Reason for Visit</label>
 				<br>
-				<input type="text" id="reasonToVisit"/>
+				<input type="text" id="reasonToVisit" th:field="*{reasonForVisit}"/>
 			</p>
 		
 			<button type="submit"

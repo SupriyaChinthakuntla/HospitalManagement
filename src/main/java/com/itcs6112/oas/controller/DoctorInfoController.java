@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.itcs6112.oas.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
@@ -17,11 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.itcs6112.oas.model.AppointmentInfo;
-import com.itcs6112.oas.model.DoctorAvailability;
-import com.itcs6112.oas.model.DoctorInfo;
-import com.itcs6112.oas.model.UserInfo;
-import com.itcs6112.oas.model.UserInfoPrincipal;
 import com.itcs6112.oas.service.DoctorAvailabilityService;
 import com.itcs6112.oas.service.DoctorInfoService;
 
@@ -41,6 +37,7 @@ public class DoctorInfoController{
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserInfo userInfo = principal.getUserInfo();
         modelAndView.addObject("user", userInfo);
+        modelAndView.addObject("appointmentForm", new AppointmentForm());
         modelAndView.setViewName("patientHome");
         modelView = modelAndView;
         return modelAndView;

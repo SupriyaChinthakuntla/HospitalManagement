@@ -1,35 +1,50 @@
 <!DOCTYPE html>
-<html lang ="en"
- xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+    <!-- jQuery-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
 </head>
 <style>
-div {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-}
+    /*div {*/
+    /*    padding-top: 20px;*/
+    /*    padding-bottom: 20px;*/
+    /*    padding-left: 20px;*/
+    /*}*/
 </style>
 </head>
 <body>
-<table>
-    <thead>
-        <tr>
-            <th> List of your appointments </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="appointment : ${appointmentsList}">
+<div class="container-fluid m-4">
+    <h1 class="display-4 mb-3">Future Appointments</h1>
 
-            <td><span th:each= "docName:${docInfoService.getDoctorName(appointment.doctorId)}" th:text="|Apppointment with doctor ${docName}|"> Doctor Name </span></td>
-            <td><span th:text= "|from ${appointment.date_start}|"> Appointment start time </span></td>
-            <td><span th:text="| to ${appointment.date_end}|"> Appointment end time </span></td>
-            <td><span th:text= "|and notes ${appointment.notes}|"> Appointment Notes </span></td>
-            
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Doctor Name</th>
+            <th scope="col">Appointment Time</th>
+            <th scope="col">Notes</th>
+            <th scope="col">Actions</th>
         </tr>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${docInfoService.getDoctorName(appointment.getDoctorId())}"></td>
+<!--            <td th:text="${appointment.getDoctorId()}"></td>-->
+            <td th:text="${appointment.getDate_start()}"></td>
+            <td th:text="${appointment.getNotes()}"></td>
+<!--            //<a th:href="@{'/category/edit/' + ${category.idCategory}}">view</a>-->
+            <td><a href="#" th:href="@{'/appointments/' + ${appointment.getId()} + '/delete'}" class="btn btn-sm btn-danger">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
