@@ -41,7 +41,7 @@ public class RegisterController {
 
 		// Already authenticated, forward to /
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			modelAndView.setViewName("redirect:/");
+			modelAndView.setViewName("redirect:/doctors");
 		}
 		// Not yet authenticated
 		else {

@@ -37,6 +37,13 @@ public class DoctorInfo{
 		this.userInfoId = id;
 	}
 	public void setId(final Integer id) {
+
+	@Override
+	public String toString() {
+		return "DoctorInfo [id=" + id + ", speciality=" + speciality + ", name=" + name + "]";
+	}
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public void setSpecialty(final String specialty) {

@@ -55,6 +55,12 @@ public class AppointmentInfoService{
     public String getEndDate(AppointmentInfo doc){
         return doc.getEndDate().toString();
     }
+
+    public AppointmentInfo createAppointment(AppointmentInfo appointmentInfo) {
+        return appointmentInfoRepository.save(appointmentInfo);
+    }
+
+    public void cancelAppointment(Integer id) { appointmentInfoRepository.deleteById(id); }
     
     public Optional<AppointmentInfo> findById(Integer id) {
         return appointmentInfoRepository.findById(id);
@@ -63,9 +69,18 @@ public class AppointmentInfoService{
     public void fetchAllAppointments() {
         this.appointments = appointmentInfoRepository.findAll();
     }
+    
+    public List<AppointmentInfo> findByPatientId(Integer id) {
+        return appointmentInfoRepository.findByPatientId(id);
+    }
 
     public Iterable<AppointmentInfo> getAllAppointments() {
         return this.appointments;
+    public List<AppointmentInfo> findAll() {
+    	List<AppointmentInfo> appointmentList = new ArrayList<>();  
+    	appointmentInfoRepository.findAll().forEach(appointmentList::add);
+
+        return appointmentList;
     }
 
     public void saveAppointment(AppointmentInfo user) {

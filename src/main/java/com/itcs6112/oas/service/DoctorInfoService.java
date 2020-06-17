@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.itcs6112.oas.model.DoctorInfo;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.DoctorInfoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 public class DoctorInfoService{

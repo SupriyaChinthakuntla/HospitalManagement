@@ -25,6 +25,12 @@ public class AppointmentInfo{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+	@Override
+	public String toString() {
+		return "AppointmentInfo [id=" + id + ", patientId=" + patientId + ", doctorId=" + doctorId + ", notes=" + notes
+				+ ", reasonForVisit=" + reasonForVisit + ", date_start=" + date_start + ", date_end=" + date_end
+				+ ", cancelled=" + cancelled + "]";
+	}
 	@Column(name = "patient_id")
 	@NotEmpty
 	private Integer patientInfoId;
@@ -68,6 +74,12 @@ public class AppointmentInfo{
 	}
 	public void setReasonForVisit(String reason){
 		this.reasonForVisit = reason;
+
+	public AppointmentInfo(Integer patientId, Integer doctorId, String reasonForVisit, Date date_start) {
+		this.patientId = patientId;
+		this.doctorId = doctorId;
+		this.reasonForVisit = reasonForVisit;
+		this.date_start = date_start;
 	}
 	public void setApptNotes(String notes){
 		this.notes = notes;
@@ -91,15 +103,27 @@ public class AppointmentInfo{
 	}
 	public String getReasonForVisit(){
 		return this.reasonForVisit;
+
+	public String getNotes() {
+		return notes;
 	}
 	public String getApptNotes(){
 		return this.notes;
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 	public Date getStartDate(){
 		return this.startDate;
+
+	public String getReasonForVisit() {
+		return reasonForVisit;
 	}
 	public Date getEndDate(){
 		return this.endDate;
+
+	public void setReasonForVisit(String reasonForVisit) {
+		this.reasonForVisit = reasonForVisit;
 	}
 	// public Boolean getCancelled(){
 	// 	return this.cancelled;
