@@ -25,8 +25,8 @@ public class AppointmentInfoService{
         return appointmentInfoRepository.save(appointmentInfo);
     }
 
-    public void deleteAppointment(Integer id) { appointmentInfoRepository.deleteById(id); }
-
+    public void cancelAppointment(Integer id) { appointmentInfoRepository.deleteById(id); }
+    
     public Optional<AppointmentInfo> findById(Integer id) {
         return appointmentInfoRepository.findById(id);
     }

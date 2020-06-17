@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+<h1>Appointment Dashboard</h1>
+
+<div th:if="${userInfo}" th:text="'Welcome ' + ${userInfo.getFname()} + ' ' + ${userInfo.getLname()} + ' (' + ${userInfo.getEmail()} + ')'"></div>
+
+<div class="margin-top20 text-center">
+    <a th:href="@{/logout}">Logout</a>
+</div>
+</body>
+</html>

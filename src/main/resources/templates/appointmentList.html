@@ -23,6 +23,9 @@
 </head>
 <body>
 <div class="container-fluid m-4">
+<a href="#" th:href="@{'/doctors'}">Back</a>
+<br>
+<br>
     <h1 class="display-4 mb-3">Future Appointments</h1>
 
     <table class="table">
@@ -30,7 +33,7 @@
         <tr>
             <th scope="col">Doctor Name</th>
             <th scope="col">Appointment Time</th>
-            <th scope="col">Notes</th>
+            <th scope="col">Reason for Visit</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -39,9 +42,33 @@
             <td th:text="${docInfoService.getDoctorName(appointment.getDoctorId())}"></td>
 <!--            <td th:text="${appointment.getDoctorId()}"></td>-->
             <td th:text="${appointment.getDate_start()}"></td>
-            <td th:text="${appointment.getNotes()}"></td>
+            <td th:text="${appointment.getReasonForVisit()}"></td>
 <!--            //<a th:href="@{'/category/edit/' + ${category.idCategory}}">view</a>-->
-            <td><a href="#" th:href="@{'/appointments/' + ${appointment.getId()} + '/delete'}" class="btn btn-sm btn-danger">Delete</a></td>
+            <td><a href="#" th:href="@{'/appointments/' + ${appointment.getId()} + '/cancel'}" class="btn btn-sm btn-danger">Cancel</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+<div class="container-fluid m-4">
+    <h1 class="display-4 mb-3">Past Appointments</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Doctor Name</th>
+            <th scope="col">Appointment Time</th>
+            <th scope="col">Reason for Visit</th>
+            <th scope="col">Doctor Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments}">
+            <td th:text="${docInfoService.getDoctorName(appointment.getDoctorId())}"></td>
+            <td th:text="${appointment.getDate_start()}"></td>
+            <td th:text="${appointment.getReasonForVisit()}"></td>
+            <td th:text="${appointment.getNotes()}"></td>
         </tr>
         </tbody>
     </table>

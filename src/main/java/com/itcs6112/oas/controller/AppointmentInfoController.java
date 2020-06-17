@@ -96,9 +96,9 @@ public class AppointmentInfoController {
 //        return appointmentInfoService.findByPatientId(id);
 //    }
 
-    @GetMapping("/appointments/{id}/delete")
-    public RedirectView deleteAppointment(@PathVariable Integer id, HttpServletRequest request) {
-        appointmentInfoService.deleteAppointment(id);
+    @GetMapping("/appointments/{id}/cancel")
+    public RedirectView cancelAppointment(@PathVariable Integer id, HttpServletRequest request) {
+        appointmentInfoService.cancelAppointment(id);
         String referer = request.getHeader("Referer");
         return new RedirectView(referer);
     }
