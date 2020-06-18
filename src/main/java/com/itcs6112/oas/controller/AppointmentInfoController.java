@@ -70,7 +70,7 @@ public class AppointmentInfoController {
     	modelAndView.setViewName("appointmentList");
 
     	if (!bindingResult.hasErrors()) {
-    		Mailer.send(principal.getUserInfo().getEmail());
+    		Mailer.send(principal.getUserInfo(), appointmentInfo);
 
     	} 
 
