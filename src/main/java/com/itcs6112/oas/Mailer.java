@@ -13,7 +13,7 @@ public class Mailer {
 	public static void send(UserInfo ui, AppointmentInfo ai) {
 		// TODO Auto-generated method stub
 		String to = ui.getEmail();
-		String startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm a").format(ai.getDate_start());
+		String startDate = new SimpleDateFormat("yyyy-MM-dd hh:mm a").format(ai.getStartDate());
 		
 		final String user="hospitalmanagementssdi@gmail.com";//change accordingly  
 		final String pass="Test@12345";  
