@@ -2,7 +2,6 @@ package com.itcs6112.oas.service;
 
 import com.itcs6112.oas.model.AppointmentInfo;
 import com.itcs6112.oas.model.DoctorInfo;
-import com.itcs6112.oas.model.PatientInfo;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.AppointmentInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,6 @@ public class AppointmentInfoService{
     private UserInfoService userInfoService;
     @Autowired
     private DoctorInfoService doctorInfoService;
-    @Autowired
-    private PatientInfoService patientInfoService;
    
     private Iterable<AppointmentInfo> appointments;
     public AppointmentInfoService(AppointmentInfoRepository appointmentInfoRepository){
@@ -45,8 +42,8 @@ public class AppointmentInfoService{
     }
     
     public String getPatientName(AppointmentInfo appt){
-        PatientInfo patientInfo = this.patientInfoService.findById(appt.getDoctorId());
-        UserInfo userInfo= this.userInfoService.findById(patientInfo.getUserInfoId());
+        // PatientInfo patientInfo = this.patientInfoService.findById(appt.getDoctorId());
+        UserInfo userInfo= this.userInfoService.findById(appt.getPatientId());
 		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
     }
     
@@ -54,6 +51,10 @@ public class AppointmentInfoService{
         DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorId());
         UserInfo userInfo= this.userInfoService.findById(doctorInfo.getUserInfoId());
 		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+    }
+    
+    public String getReason(AppointmentInfo appt){
+		return appt.getReasonForVisit();
     }
 
     public String getStartDate(AppointmentInfo doc){

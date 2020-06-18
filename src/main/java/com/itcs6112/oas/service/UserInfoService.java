@@ -21,14 +21,10 @@ public class UserInfoService {
     }
 
     public UserInfo findById(Integer id) {
-        // System.out.println("\n\nUserInfo:findById():");
-        // System.out.println(id);
-        // System.out.println("\n\n");
         for(UserInfo d : users)
             if(d.getId().equals(id))
                 return d;
         return userInfoRepository.findById(id).orElse(null);
-        // return userInfoRepository.findById(id).orElse(null);
     }
     
     public void fetchAllUsers() {
@@ -41,10 +37,6 @@ public class UserInfoService {
 
     public void saveUser(UserInfo user) {
         userInfoRepository.save(user);
-    }
-	public String getinfostring(UserInfo user){
-        // UserInfo user = this.findById(id);
-		return user.getFname() + " " + user.getLname() + " " + user.getEmail() ;
     }
     
 }

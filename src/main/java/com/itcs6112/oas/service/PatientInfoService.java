@@ -58,10 +58,10 @@ public class PatientInfoService {
 		return patient.getDOB().toString();
     }
     
-    public String getInfoString(PatientInfo pat){
-        UserInfo userInfo = this.userInfoService.findById(pat.getUserInfoId());
-        return String.format("Patient: %s %s | DOB: %s | Email: %s", userInfo.getFname(), userInfo.getLname(), pat.getDOB(),userInfo.getEmail());
-		// return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname() + " " + userInfo.getEmail() + ": " + pat.getDOB().toString() : "N/A";
-    }
+    // public String getInfoString(PatientInfo pat){
+    //     UserInfo userInfo = this.userInfoService.findById(pat.getUserInfoId());
+    //     return String.format("Patient: %s %s | DOB: %s | Email: %s", userInfo.getFname(), userInfo.getLname(), pat.getDOB(),userInfo.getEmail());
+	// 	// return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname() + " " + userInfo.getEmail() + ": " + pat.getDOB().toString() : "N/A";
+    // }
     
 }

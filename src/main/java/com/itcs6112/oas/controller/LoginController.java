@@ -17,7 +17,7 @@ public class LoginController {
 
 		// Already authenticated, forward to /
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			modelAndView.setViewName("redirect:/appointments");
+			modelAndView.setViewName("redirect:/admin");
 		}
 		// Not yet authenticated
 		else {

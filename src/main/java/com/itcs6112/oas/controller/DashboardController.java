@@ -2,7 +2,6 @@ package com.itcs6112.oas.controller;
 
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.Date;
 
 import com.itcs6112.oas.model.AppointmentInfo;
 import com.itcs6112.oas.model.DoctorAvailability;
@@ -40,7 +39,7 @@ public class DashboardController {
     @Autowired
     DoctorAvailabilityService doctorAvailabilityService;
 
-    // private UserInfo currentUserInfo = null;
+    private UserInfo currentUserInfo = null;
 
 
     
@@ -96,7 +95,7 @@ public class DashboardController {
         modelAndView.addObject("apptInfoService",this.appointmentInfoService);
         modelAndView.addObject("patInfoService",this.patientInfoService);
         modelAndView.addObject("userInfoService",this.patientInfoService);
-        // modelAndView.addObject("currentUserInfo", this.currentUserInfo);
+        modelAndView.addObject("currentUserInfo", this.currentUserInfo);
         modelAndView.addObject("dummyUserInfo", new UserInfo());
         modelAndView.addObject("dummyApptInfo", new AppointmentInfo());
         modelAndView.setViewName("adminDashboard");

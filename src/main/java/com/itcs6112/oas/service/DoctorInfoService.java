@@ -1,6 +1,5 @@
 package com.itcs6112.oas.service;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.itcs6112.oas.model.DoctorInfo;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.DoctorInfoRepository;
@@ -61,8 +60,8 @@ public class DoctorInfoService{
     }
   
 	// public String getInfoString(Integer id){
-	public String getInfoString(DoctorInfo doc){
-        UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
-        return String.format("Doctor: %s %s | Email: %s | Specialty: %s", userInfo.getFname(),userInfo.getLname(),userInfo.getEmail(), doc.getSpeciality());
-    }
+	// public String getInfoString(DoctorInfo doc){
+    //     UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
+    //     return String.format("Doctor: %s %s | Email: %s | Specialty: %s", userInfo.getFname(),userInfo.getLname(),userInfo.getEmail(), doc.getSpeciality());
+    // }
 }

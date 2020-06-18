@@ -1,7 +1,5 @@
 package com.itcs6112.oas.model;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 
 public class AppointmentForm {
 

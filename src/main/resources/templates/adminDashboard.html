@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <!-- <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -7,78 +8,112 @@
     <title>OAS Patient Registration</title> -->
 
     <!-- Bootstrap core CSS -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
     <!-- jQuery-->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
     <!-- Bootstrap Validator plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
 </head>
 
-    <body>
-        <h1>OAS Dashboard </h1>
-        <div th:if="${currentUserInfo}"
-            th:text="'Welcome ' + ${currentUserInfo.getFname()} + ' ' + ${currentUserInfo.getLname()} + ' (' + ${currentUserInfo.getEmail()} + ')'">
-        </div>
-        <div>
-        	<div th:if="${doctorAddedSuccessfullyMsg}" class="alert alert-success" role="alert"
-                 th:text="${doctorAddedSuccessfullyMsg}">
-            </div>
-            <h4>Create New Doctor</h4>
-            <form autocomplete="off" action="#" th:action="@{/createDoctor}" th:object="${dummyUserInfo}" method="POST">
-                <input type="text" th:field="*{fname}" placeholder="First Name" class="form-control" required />
-                <input type="text" th:field="*{lname}" placeholder="Last Name" class="form-control" required />
-                <input type="email" th:field="*{email}" placeholder="Email Address" class="form-control" required/>
-                <select th:if="${docSpecialtyList}"th:field="*{testing}">
-                    <option th:each="spec: ${docSpecialtyList}" th:value="${spec}" th:text="${spec}" ></option>
-                </select>
-        
-                <button type="submit" class="btn btn-primary block full-width m-b">Create Doctor</button>
-            </form>
-        </div>
-        <!-- <div th:if="${dummyApptInfo}">
-            <h4>Create New Appt </h4>
-            <form action="#" th:action="@{/createAppt}" th:object="${dummyApptInfo}" method="POST">
-            <form autocomplete="off" th:action="@{/createAppt}" th:object="${dummyApptInfo}" method="POST">
-                <select th:field="*{doctorId}">
-                    <option th:each="doct : ${docInfoService.getAllDoctors()}" th:value="${doct.getId()}" th:text="${docInfoService.getDoctorName(doct)}" ></option>
-                </select>
-                <select th:field="*{patientId}">
-                    <option th:each="pat: ${patInfoService.getAllPatients()}" th:value="${pat.getId()}" th:text="${patInfoService.getPatientName(pat)}" ></option>
-                </select>
-                <input type="datetime-local" th:field="*{endDate}" required/>
-                <input type="datetime-local" th:field="*{startDate}" required/>
-                <input type="datetime-local" th:field="*{endDateString}" required/>
-                <input type="datetime-local" th:field="*{startDateString}" required/>
-                <button type="submit" class="btn btn-primary block full-width m-b">Create Appointment</button>
-            </form>
-        </div> -->
+<body>
+    <h2>OAS Admin</h2>
+    <div th:if="${currentUserInfo}"
+        th:text="'Welcome ' + ${currentUserInfo.getFname()} + ' ' + ${currentUserInfo.getLname()} + ' (' + ${currentUserInfo.getEmail()} + ')'">
+    </div>
+    <div class="container-fluid m-4">
+        <h4 class="display-4 mb-3">Register New Doctor</h4>
+        <form autocomplete="off" action="#" th:action="@{/createDoctor}" th:object="${dummyUserInfo}" method="POST">
+            <input type="text" th:field="*{fname}" placeholder="First Name" class="form-control" required />
+            <input type="text" th:field="*{lname}" placeholder="Last Name" class="form-control" required />
+            <input type="email" th:field="*{email}" placeholder="Email Address" class="form-control" required />
+            <select th:if="${docSpecialtyList}" th:field="*{testing}">
+                <option th:each="spec: ${docSpecialtyList}" th:value="${spec}" th:text="${spec}"></option>
+            </select>
 
-        <div>
-            <h4>Doctors</h4>
-            <ul>
-                <li th:each="doc: ${docInfoService.getAllDoctors()}" th:text="${docInfoService.getInfoString(doc)}"></li>
-            </ul>
+            <button type="submit" class="btn btn-primary block full-width m-b">Create Doctor</button>
+        </form>
+    </div>
 
-            <h4>View all Patients</h4>
-            <ul>
-                <li th:each="pat: ${patInfoService.getAllPatients()}" th:text="${patInfoService.getInfoString(pat)}"></li>
-            </ul>
-        </div>
-        <div th:if="${apptInfoService}">
-            <h4>Scheduled Appointments: </h4>
-            <ul>
-                <!-- <li th:each="appt: ${apptInfoService.getAllAppointments()}" th:text="${appt.getStartDate().toString()}"></li> -->
-                <li th:each="appt: ${apptInfoService.getAllAppointments()}" th:text="${apptInfoService.getInfoString(appt)}"></li>
-            </ul>
-        </div>
+    <div class="container-fluid m-4">
+        <h4 class="display-4 mb-3">Registered Doctors</h4>
 
-        <div class="margin-top20 text-center">
-            <a th:href="@{/logout}">Logout</a>
-        </div>
-    </body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Speciality</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="doc: ${docInfoService.getAllDoctors()}">
+                    <td th:text="${docInfoService.getDoctorName(doc.getId())}"></td>
+                    <td th:text="${docInfoService.getDoctorEmail(doc.getId())}"></td>
+                    <td th:text="${docInfoService.getDoctorSpecialty(doc.getId())}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-fluid m-4">
+        <h4 class="display-4 mb-3">Registered Patients</h4>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">DOB</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pat: ${patInfoService.getAllPatients()}">
+                    <td th:text="${patInfoService.getPatientName(pat.getId())}"></td>
+                    <td th:text="${patInfoService.getPatientEmail(pat.getId())}"></td>
+                    <td th:text="${patInfoService.getPatientDOB(pat.getId())}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container-fluid m-4">
+        <h4 class="display-4 mb-3">Registered Appointments</h4>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="appt: ${apptInfoService.getAllAppointments()}">
+                    <td th:text="${apptInfoService.getDoctorName(appt)}"></td>
+                    <td th:text="${apptInfoService.getPatientName(appt)}"></td>
+                    <td th:text="${apptInfoService.getStartDate(appt)}"></td>
+                    <td th:text="${apptInfoService.getReason(appt)}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="margin-top20 text-center">
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</body>
 
 </html>
