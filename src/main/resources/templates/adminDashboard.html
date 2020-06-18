@@ -26,11 +26,11 @@
     </div>
     <div class="container-fluid m-4">
         <h4 class="display-4 mb-3">Register New Doctor</h4>
-        <form autocomplete="off" action="#" th:action="@{/createDoctor}" th:object="${dummyUserInfo}" method="POST">
+        <form class="form-inline" autocomplete="off" action="#" th:action="@{/createDoctor}" th:object="${dummyUserInfo}" method="POST">
             <input type="text" th:field="*{fname}" placeholder="First Name" class="form-control" required />
             <input type="text" th:field="*{lname}" placeholder="Last Name" class="form-control" required />
             <input type="email" th:field="*{email}" placeholder="Email Address" class="form-control" required />
-            <select th:if="${docSpecialtyList}" th:field="*{testing}">
+            <select class="form-control" th:if="${docSpecialtyList}" th:field="*{testing}">
                 <option th:each="spec: ${docSpecialtyList}" th:value="${spec}" th:text="${spec}"></option>
             </select>
 
