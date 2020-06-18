@@ -23,7 +23,7 @@
 </head>
 <body>
 <div class="container-fluid m-4">
-<a href="#" th:href="@{'/doctors'}">Back</a>
+<a href="#" th:href="@{'/doctors'}">Schedule new appointment</a>
 <br>
 <br>
     <h1 class="display-4 mb-3">Future Appointments</h1>
@@ -41,7 +41,7 @@
         <tr th:each="appointment : ${appointments}">
             <td th:text="${docInfoService.getDoctorName(appointment.getDoctorId())}"></td>
 <!--            <td th:text="${appointment.getDoctorId()}"></td>-->
-            <td th:text="${appointment.getDate_start()}"></td>
+            <td th:text="${appointment.getStartDate()}"></td>
             <td th:text="${appointment.getReasonForVisit()}"></td>
 <!--            //<a th:href="@{'/category/edit/' + ${category.idCategory}}">view</a>-->
             <td><a href="#" th:href="@{'/appointments/' + ${appointment.getId()} + '/cancel'}" class="btn btn-sm btn-danger">Cancel</a></td>
@@ -66,7 +66,7 @@
         <tbody>
         <tr th:each="appointment : ${appointments}">
             <td th:text="${docInfoService.getDoctorName(appointment.getDoctorId())}"></td>
-            <td th:text="${appointment.getDate_start()}"></td>
+            <td th:text="${appointment.getStartDate()}"></td>
             <td th:text="${appointment.getReasonForVisit()}"></td>
             <td th:text="${appointment.getNotes()}"></td>
         </tr>

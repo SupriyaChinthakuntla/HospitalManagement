@@ -8,6 +8,7 @@ public class AppointmentForm {
     private String reasonForVisit;
     private Integer doctorId;
     private String doctorAvailableTime;
+    private String spec;
 
     public AppointmentForm(String reasonForVisit, Integer doctorId, String doctorAvailableTime) {
         this.reasonForVisit = reasonForVisit;
@@ -28,6 +29,12 @@ public class AppointmentForm {
 
     public Integer getDoctorId() {
         return doctorId;
+    }
+    public String getSpec(){
+        return this.spec;
+    }
+    public void setSpec(String spec){
+        this.spec = spec;
     }
 
     public void setDoctorId(Integer doctorId) {

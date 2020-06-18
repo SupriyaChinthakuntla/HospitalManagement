@@ -23,11 +23,11 @@ public class DoctorAvailability {
 	private Integer availability_id;
 
 	@Column(name = "doctor_id")
-	@NotEmpty
+	// @NotEmpty
 	private Integer doctorId;
 
 	@Column(name = "available_time")
-	@NotEmpty
+	// @NotEmpty
 	@DateTimeFormat
 	private Timestamp doctorAvailableTime;
 

@@ -27,7 +27,9 @@
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-<script type="text/javascript"> 
+<!-- <script type="text/javascript">  -->
+<script th:inline="javascript">
+/*<![CDATA[*/
 
 function setSpeciality(doctorId) {
 	$.ajax({
@@ -48,21 +50,26 @@ $(document).ready(function() {
 
 	$('#specialityIdx').on('change', function(){
          var speciality = $(this).val();
+		 console.log(speciality);
 		$.ajax({
 			type: 'GET',
 			url: '/doctors/speciality/' + speciality,
+			// url: '/doctors/speciality/ortho',
 			success: function(result) {
-				
+				// console.log(result)	;
 				var s = '';
 				for(var i = 0; i < result.length; i++) {
 					s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
 				}
+					s += '<option value="' + 777 + '">' + "TESTING" + '</option>';
+				/*[[${docList}]]*/ 'default' = result;
+				var message = /*[[${docList}]]*/ 'default';
+    			console.log(message);
 				$('#doctorIdx').html(s);
 					var doctorId = result[0].id;
 					setSpeciality(doctorId);
 				
 			}
-		
 		});
 	}); 
 
@@ -72,6 +79,7 @@ $(document).ready(function() {
 	});
 
 });
+/*]]>*/
 </script>
 
 </head>
@@ -86,8 +94,8 @@ $(document).ready(function() {
 			<p><label>Speciality</label> 
 			<select class="form-control selectpicker" id="specialityIdx" name="speciality">
 				<option value="">Select...</option>
-				<option th:each="doctor : ${doctors}"
-					th:value="${doctor.speciality}" th:text="${doctor.speciality}">
+				<option th:each="speciality: ${docSpecialtyList}"
+					th:value="${speciality}" th:text="${speciality}">
 				</option> 
 			</select>
 			</p>

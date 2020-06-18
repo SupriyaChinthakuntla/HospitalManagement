@@ -24,6 +24,8 @@ public class DoctorAvailabilityService {
     private DoctorAvailabilityRepository doctorAvailabilityRepository;
 
     public List<DoctorAvailability> getAllAvailabilities() {
+        System.out.println("\n\n\n");
+        System.out.println("DoctorAvailabilityService");
         List<DoctorAvailability> doctorList = new ArrayList<>();
         doctorAvailabilityRepository.findAll().forEach(doctorList::add);
         return doctorList;
@@ -31,6 +33,10 @@ public class DoctorAvailabilityService {
 
     public List<DoctorAvailability> findByDoctorId(Integer doctorId) {
         return doctorAvailabilityRepository.findByDoctorId(doctorId);
+    }
+
+    public void saveAvailability(DoctorAvailability d){
+        this.doctorAvailabilityRepository.save(d);
     }
 
 

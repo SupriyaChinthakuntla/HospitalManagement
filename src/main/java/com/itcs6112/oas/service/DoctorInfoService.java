@@ -8,10 +8,6 @@ import com.itcs6112.oas.repository.DoctorInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Service
@@ -29,12 +25,11 @@ public class DoctorInfoService{
     }
     
     public void fetchAllDoctors(){
-        doctors = doctorInfoRepository.findAll();
+        this.doctors = doctorInfoRepository.findAll();
     }
     
     public Iterable<DoctorInfo> getAllDoctors(){
-        // doctors = doctorInfoRepository.findAll();
-        return doctors;
+        return this.doctors;
     }
    
     public DoctorInfo findById(Integer ID){
@@ -54,7 +49,7 @@ public class DoctorInfoService{
     
     public String getDoctorName(DoctorInfo doc){
         UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
-		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+        return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
     }
 
 	public String getDoctorEmail(DoctorInfo doc){
@@ -69,6 +64,5 @@ public class DoctorInfoService{
 	public String getInfoString(DoctorInfo doc){
         UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
         return String.format("Doctor: %s %s | Email: %s | Specialty: %s", userInfo.getFname(),userInfo.getLname(),userInfo.getEmail(), doc.getSpeciality());
-		// return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname() + " " + userInfo.getEmail() + ": " + doc.getSpecialty() : "N/A";
     }
 }

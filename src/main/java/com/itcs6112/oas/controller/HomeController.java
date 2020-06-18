@@ -12,13 +12,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-    @GetMapping()
-    public ModelAndView dashboard(ModelAndView modelAndView) {
-        UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserInfo userInfo = principal.getUserInfo();
-        modelAndView.addObject("userInfo", userInfo);
-        modelAndView.setViewName("home");
-        return modelAndView;
-    }
+    // public ModelAndView dashboard(ModelAndView modelAndView) {
+    //     UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    //     UserInfo userInfo = principal.getUserInfo();
+    //     modelAndView.addObject("userInfo", userInfo);
+    //     if (userInfo.getRole().equals("admin")){
+    //     }
+    //     modelAndView.setViewName("adminPage");
+    //     return modelAndView;
+    // }
 
 }

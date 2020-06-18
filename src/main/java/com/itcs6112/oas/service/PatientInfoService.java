@@ -27,12 +27,21 @@ public class PatientInfoService {
     public Iterable<PatientInfo> getAllPatients(){
         return this.patients;
     }
+
     public PatientInfo findById(Integer ID){
         for(PatientInfo p : patients)
             if(p.getId().equals(ID))
                 return p;
         return patientInfoRepository.findById(ID).orElse(null);
     }
+    
+    public PatientInfo findByUserId(Integer ID){
+        for(PatientInfo p : patients)
+            if(p.getUserInfoId().equals(ID))
+                return p;
+        return patientInfoRepository.findById(ID).orElse(null);
+    }
+
     public void savePatient(PatientInfo patient) {
         patientInfoRepository.save(patient);
     }

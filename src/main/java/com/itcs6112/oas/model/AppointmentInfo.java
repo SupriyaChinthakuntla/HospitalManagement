@@ -28,16 +28,16 @@ public class AppointmentInfo{
 	@Override
 	public String toString() {
 		return "AppointmentInfo [id=" + id + ", patientId=" + patientId + ", doctorId=" + doctorId + ", notes=" + notes
-				+ ", reasonForVisit=" + reasonForVisit + ", date_start=" + date_start + ", date_end=" + date_end
+				+ ", reasonForVisit=" + reasonForVisit + ", date_start=" + startDate + ", date_end=" + endDate 
 				+ ", cancelled=" + cancelled + "]";
 	}
 	@Column(name = "patient_id")
-	@NotEmpty
-	private Integer patientInfoId;
+	// @NotEmpty
+	private Integer patientId;
 	
 	@Column(name = "doctor_id")
-	@NotEmpty	
-	private Integer doctorInfoId;
+	// @NotEmpty	
+	private Integer doctorId;
 	
 	@Column(name = "appt_notes")
 	private String notes;
@@ -55,6 +55,7 @@ public class AppointmentInfo{
 
 	@Transient
 	private String startDateString;
+	
 	@Transient
 	private String endDateString;
 	public void setStartDateString(String dateStartString){this.startDateString = dateStartString;}
@@ -62,24 +63,27 @@ public class AppointmentInfo{
 	public String getStartDateString(){return this.startDateString;}
 	public String getEndDateString(){return this.endDateString; }
 	
+	
+	public AppointmentInfo() {}
+	public AppointmentInfo(Integer patientId, Integer doctorId, String reasonForVisit, Date date_start) {
+		this.patientId= patientId;
+		this.doctorId= doctorId;
+		this.reasonForVisit = reasonForVisit;
+		this.startDate = date_start;
+	}
+	
 	@Column(name = "cancelled")
 	private Boolean cancelled;
 	
 	//setters
-	public void setPatientInfoId(Integer id){
-		this.patientInfoId = id;
+	public void setPatientId(Integer id){
+		this.patientId = id;
 	}
 	public void setDoctorInfoId(Integer id){
-		this.doctorInfoId = id;
+		this.doctorId = id;
 	}
 	public void setReasonForVisit(String reason){
 		this.reasonForVisit = reason;
-
-	public AppointmentInfo(Integer patientId, Integer doctorId, String reasonForVisit, Date date_start) {
-		this.patientId = patientId;
-		this.doctorId = doctorId;
-		this.reasonForVisit = reasonForVisit;
-		this.date_start = date_start;
 	}
 	public void setApptNotes(String notes){
 		this.notes = notes;
@@ -95,36 +99,38 @@ public class AppointmentInfo{
 	}
 	
 	//getters
-	public Integer getPatientInfoId(){
-		return this.patientInfoId;
+	public Integer getDoctorId(){
+		return this.doctorId;
 	}
-	public Integer getDoctorInfoId(){
-		return this.doctorInfoId;
+	public Integer getPatientId(){
+		return this.patientId;
 	}
 	public String getReasonForVisit(){
 		return this.reasonForVisit;
+	}
 
 	public String getNotes() {
-		return notes;
-	}
-	public String getApptNotes(){
 		return this.notes;
-
+	}
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
 	public Date getStartDate(){
 		return this.startDate;
 
-	public String getReasonForVisit() {
-		return reasonForVisit;
+	}
+	public void setId(Integer id){
+		this.id = id;
+	}
+	public Integer getId(){
+		return this.id;
 	}
 	public Date getEndDate(){
 		return this.endDate;
-
-	public void setReasonForVisit(String reasonForVisit) {
-		this.reasonForVisit = reasonForVisit;
 	}
+	// public void setReasonForVisit(String reasonForVisit) {
+	// 	this.reasonForVisit = reasonForVisit;
+	// }
 	// public Boolean getCancelled(){
 	// 	return this.cancelled;
 	// }

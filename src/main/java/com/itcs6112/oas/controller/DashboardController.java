@@ -1,18 +1,15 @@
 package com.itcs6112.oas.controller;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
 
 import com.itcs6112.oas.model.AppointmentInfo;
+import com.itcs6112.oas.model.DoctorAvailability;
 import com.itcs6112.oas.model.DoctorInfo;
-import com.itcs6112.oas.model.PatientInfo;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.service.AppointmentInfoService;
+import com.itcs6112.oas.service.DoctorAvailabilityService;
 import com.itcs6112.oas.service.DoctorInfoService;
 import com.itcs6112.oas.service.PatientInfoService;
 import com.itcs6112.oas.service.UserInfoService;
@@ -21,33 +18,51 @@ import com.itcs6112.oas.model.UserInfoPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class DashboardController {
     @Autowired
     UserInfoService userInfoService;
+    
     @Autowired
     DoctorInfoService doctorInfoService;
+    
     @Autowired
     PatientInfoService patientInfoService;
+    
     @Autowired
     AppointmentInfoService appointmentInfoService;
+    
+    @Autowired
+    DoctorAvailabilityService doctorAvailabilityService;
 
-    private UserInfo currentUserInfo = null;
+    // private UserInfo currentUserInfo = null;
 
-    @RequestMapping("/")
+
+    
+    @GetMapping(path="/")
+    public ModelAndView showHome(ModelAndView modelAndView) {
+        UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal.getUserInfo().getRole().equals("admin"))
+            return new ModelAndView("redirect:/admin", modelAndView.getModel());
+        else
+            return new ModelAndView("redirect:/appointments", modelAndView.getModel());
+    }
+
+    @GetMapping("/admin")
     public ModelAndView showDashboard(ModelAndView modelAndView) {
 
-        UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication()
-                .getPrincipal();
+        UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal.getUserInfo().getRole().equals("admin")) {
             refreshDashboard(modelAndView);
-        } else
-            modelAndView.setViewName("userDashboard");
+        } else{
+            return new ModelAndView("redirect:/appointments", modelAndView.getModel());
+
+        }
         return modelAndView;
     }
 
@@ -56,29 +71,19 @@ public class DashboardController {
         userInfoService.saveUser(userInfo);
         DoctorInfo d = new DoctorInfo();
         d.setSpecialty(userInfo.getTesting()); // using password data field as placeholder to get the doctor specialty
-                                               // in
+        d.setName(userInfo.getFname() + " " + userInfo.getLname());
         d.setUserInfoId(userInfo.getId()); // associate this new doctor with UserInfo object populated by thymeleaf form
         userInfo.setRole("doctor"); // set this user's role to doctor
         userInfo.setPassword("defaultpassword"); // set the password to a default (user would change at later date)
 
         doctorInfoService.saveDoctor(d);
         
-        modelAndView.addObject("doctorAddedSuccessfullyMsg", "Doctor created successfully!");
-        return this.refreshDashboard(modelAndView);
-    }
-
-    @PostMapping("/createAppt")
-    public ModelAndView createAppointment(ModelAndView modelAndView, @ModelAttribute AppointmentInfo apptInfo){
-        System.out.println("\n\n\n\n\n");
-        System.out.println(apptInfo.getPatientInfoId());
-        System.out.println(apptInfo.getDoctorInfoId());
-        System.out.println(apptInfo.getEndDate().toString());
-        System.out.println(apptInfo.getStartDate().toString());
-        System.out.println("\n\n\n\n\n");
+        DoctorAvailability da = new DoctorAvailability();
+        da.setDoctorAvailableTime(new Timestamp(System.currentTimeMillis()));
+        da.setDoctorId(d.getId());
+        doctorAvailabilityService.saveAvailability(da);
+        return new ModelAndView("redirect:/admin", modelAndView.getModel());
         
-        
-        this.appointmentInfoService.saveAppointment(apptInfo);
-        return this.refreshDashboard(modelAndView);
     }
 
     private ModelAndView refreshDashboard(ModelAndView modelAndView){
@@ -86,17 +91,12 @@ public class DashboardController {
         this.patientInfoService.fetchAllPatients();
         this.userInfoService.fetchAllUsers();
         this.appointmentInfoService.fetchAllAppointments();
-        // modelAndView.addObject("allPatients",this.patientInfoService.getAllPatients());
-        // modelAndView.addObject("allDoctors",this.doctorInfoService.getAllDoctors());
-        // for(PatientInfo u: this.patientInfoService.getAllPatients()){
-        //     System.out.println(u.getUserInfo().getEmail());
-        // }
         modelAndView.addObject("docSpecialtyList",Arrays.asList("Cardiologist", "Neurologist", "Orthopedist"));
         modelAndView.addObject("docInfoService",this.doctorInfoService);
         modelAndView.addObject("apptInfoService",this.appointmentInfoService);
         modelAndView.addObject("patInfoService",this.patientInfoService);
         modelAndView.addObject("userInfoService",this.patientInfoService);
-        modelAndView.addObject("currentUserInfo", this.currentUserInfo);
+        // modelAndView.addObject("currentUserInfo", this.currentUserInfo);
         modelAndView.addObject("dummyUserInfo", new UserInfo());
         modelAndView.addObject("dummyApptInfo", new AppointmentInfo());
         modelAndView.setViewName("adminDashboard");

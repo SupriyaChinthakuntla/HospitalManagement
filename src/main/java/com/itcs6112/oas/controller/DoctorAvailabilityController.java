@@ -1,6 +1,7 @@
 package com.itcs6112.oas.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import com.itcs6112.oas.model.DoctorInfo;
 import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.model.UserInfoPrincipal;
 import com.itcs6112.oas.service.DoctorAvailabilityService;
+import com.itcs6112.oas.service.DoctorInfoService;
 
 @RestController 
 public class DoctorAvailabilityController {
@@ -26,11 +28,17 @@ public class DoctorAvailabilityController {
 	
     @Autowired 
     private DoctorAvailabilityService doctorAvailabilityService;
+    @Autowired 
+    private DoctorInfoService doctorInfoService;
+
     
     public ModelAndView dashboard(ModelAndView modelAndView) {
+
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserInfo userInfo = principal.getUserInfo();
+        modelAndView.addObject("docSpecialtyList",Arrays.asList("Ortho","Cardiologist", "Neurologist", "Orthopedist"));
         modelAndView.addObject("user", userInfo);
+        modelAndView.addObject("doctorInfoService", doctorInfoService);
         modelAndView.setViewName("patientHome");
         modelView = modelAndView;
         return modelAndView;
@@ -38,7 +46,12 @@ public class DoctorAvailabilityController {
     
     @GetMapping(path = "/availability/{id}")
     public List<DoctorAvailability> findByDoctorId(@PathVariable Integer id) {
-    	 return doctorAvailabilityService.findByDoctorId(id);
+        System.out.println("\n\n\n");
+        System.out.println("DoctorAvailabilityController");
+        List<DoctorAvailability> d = doctorAvailabilityService.findByDoctorId(id);
+        for (DoctorAvailability da : d) 
+            System.out.println(da.getDoctorAvailableTime());
+        return doctorAvailabilityService.findByDoctorId(id);
     }
     
     @GetMapping(path = "/availability/all")

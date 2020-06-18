@@ -39,23 +39,23 @@
                 <button type="submit" class="btn btn-primary block full-width m-b">Create Doctor</button>
             </form>
         </div>
-        <div th:if="${dummyApptInfo}">
+        <!-- <div th:if="${dummyApptInfo}">
             <h4>Create New Appt </h4>
             <form action="#" th:action="@{/createAppt}" th:object="${dummyApptInfo}" method="POST">
             <form autocomplete="off" th:action="@{/createAppt}" th:object="${dummyApptInfo}" method="POST">
-                <select th:field="*{doctorInfoId}">
+                <select th:field="*{doctorId}">
                     <option th:each="doct : ${docInfoService.getAllDoctors()}" th:value="${doct.getId()}" th:text="${docInfoService.getDoctorName(doct)}" ></option>
                 </select>
-                <select th:field="*{patientInfoId}">
+                <select th:field="*{patientId}">
                     <option th:each="pat: ${patInfoService.getAllPatients()}" th:value="${pat.getId()}" th:text="${patInfoService.getPatientName(pat)}" ></option>
                 </select>
                 <input type="datetime-local" th:field="*{endDate}" required/>
                 <input type="datetime-local" th:field="*{startDate}" required/>
-                <!-- <input type="datetime-local" th:field="*{endDateString}" required/> -->
-                <!-- <input type="datetime-local" th:field="*{startDateString}" required/> -->
+                <input type="datetime-local" th:field="*{endDateString}" required/>
+                <input type="datetime-local" th:field="*{startDateString}" required/>
                 <button type="submit" class="btn btn-primary block full-width m-b">Create Appointment</button>
             </form>
-        </div>
+        </div> -->
 
         <div>
             <h4>Doctors</h4>

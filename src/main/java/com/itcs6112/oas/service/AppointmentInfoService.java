@@ -7,6 +7,9 @@ import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.AppointmentInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,24 +30,28 @@ public class AppointmentInfoService{
     }
     
     public String getInfoString(AppointmentInfo appt){
-        DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorInfoId());
+        DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorId());
         UserInfo userInfo_1 = this.userInfoService.findById(doctorInfo.getUserInfoId());
-        PatientInfo patientInfo = this.patientInfoService.findById(appt.getPatientInfoId());
-        UserInfo userInfo_2 = this.userInfoService.findById(patientInfo.getUserInfoId());
+        // PatientInfo patientInfo = this.patientInfoService.findById(appt.getPatientId());
+        UserInfo userInfo_2 = this.userInfoService.findById(appt.getPatientId());// not quite to schema
+        
         String doc_name = userInfo_1.getFname() + " " + userInfo_1.getLname();
         String pat_name = userInfo_2.getFname() + " " + userInfo_2.getLname();
+        // String pat_name = "WHY CANT I GET THIS TO WORK";
         String date = appt.getStartDate().toString();
-        return String.format("Doctor: %s | Patient: %s | Appt Date: %s",doc_name,pat_name,date);
+        String reason = appt.getReasonForVisit();
+        return String.format("Doctor: %s | Patient: %s | Appt Date: %s | Reason: %s",doc_name,pat_name,date,reason);
+
     }
     
     public String getPatientName(AppointmentInfo appt){
-        PatientInfo patientInfo = this.patientInfoService.findById(appt.getDoctorInfoId());
+        PatientInfo patientInfo = this.patientInfoService.findById(appt.getDoctorId());
         UserInfo userInfo= this.userInfoService.findById(patientInfo.getUserInfoId());
 		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
     }
     
     public String getDoctorName(AppointmentInfo appt){
-        DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorInfoId());
+        DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorId());
         UserInfo userInfo= this.userInfoService.findById(doctorInfo.getUserInfoId());
 		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
     }
@@ -70,16 +77,16 @@ public class AppointmentInfoService{
         this.appointments = appointmentInfoRepository.findAll();
     }
     
-    public List<AppointmentInfo> findByPatientId(Integer id) {
+    public Iterable<AppointmentInfo> findByPatientId(Integer id) {
         return appointmentInfoRepository.findByPatientId(id);
     }
 
     public Iterable<AppointmentInfo> getAllAppointments() {
         return this.appointments;
-    public List<AppointmentInfo> findAll() {
+    }
+    public Iterable<AppointmentInfo> findAll() {
     	List<AppointmentInfo> appointmentList = new ArrayList<>();  
     	appointmentInfoRepository.findAll().forEach(appointmentList::add);
-
         return appointmentList;
     }
 

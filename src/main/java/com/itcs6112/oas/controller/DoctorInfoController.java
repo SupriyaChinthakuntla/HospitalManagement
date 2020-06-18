@@ -1,17 +1,14 @@
 package com.itcs6112.oas.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.itcs6112.oas.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,10 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.itcs6112.oas.service.DoctorAvailabilityService;
-import com.itcs6112.oas.model.DoctorInfo;
-import com.itcs6112.oas.model.UserInfo;
-import com.itcs6112.oas.model.UserInfoPrincipal;
 import com.itcs6112.oas.service.DoctorInfoService;
+import com.itcs6112.oas.service.UserInfoService;
 
 
 @RestController 
@@ -37,12 +32,18 @@ public class DoctorInfoController{
     @Autowired 
     private DoctorAvailabilityService doctorAvailabilityService;
     
+    @Autowired 
+    private UserInfoService userInfoService;
+
     public ModelAndView modelView;
     
     @GetMapping(path="/doctors")
     public ModelAndView dashboard(ModelAndView modelAndView) {
+        userInfoService.fetchAllUsers();
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserInfo userInfo = principal.getUserInfo();
+        modelAndView.addObject("docList",new ArrayList<DoctorInfo>());
+        modelAndView.addObject("docSpecialtyList",Arrays.asList("Ortho","Cardiologist", "Neurologist", "Orthopedist"));
         modelAndView.addObject("user", userInfo);
         modelAndView.addObject("appointmentForm", new AppointmentForm());
         modelAndView.setViewName("patientHome");
@@ -50,33 +51,35 @@ public class DoctorInfoController{
         return modelAndView;
     }
     
-    @ModelAttribute("doctors")
-    public List<DoctorInfo> addAttributes(Model model) {
-    	return doctorInfoService.getAllDoctors();
-    }
+    // @ModelAttribute("doctors")
+    // public Iterable<DoctorInfo> addAttributes(Model model) {
+    // 	return doctorInfoService.getAllDoctors();
+    // }
     
-    @PostMapping(path="/add") 
-    public @ResponseBody String addNewDoctor(@RequestBody Map<String, Object> requestBody){
-        return doctorInfoService.addNewDoctor(requestBody)? "ADDED NEW DOCTOR" : "ENCOUNTERED ERROR ADDING NEW DOCTOR";
-    }
+    // @PostMapping(path="/add") 
+    // public @ResponseBody String addNewDoctor(@RequestBody Map<String, Object> requestBody){
+    //     return doctorInfoService.addNewDoctor(requestBody)? "ADDED NEW DOCTOR" : "ENCOUNTERED ERROR ADDING NEW DOCTOR";
+    // }
     
     @GetMapping(path = "/doctors/{id}")
-    public @ResponseBody Optional<DoctorInfo> searchDoctorById(@PathVariable Integer id) {
+    public @ResponseBody DoctorInfo searchDoctorById(@PathVariable Integer id) {
         return doctorInfoService.findById(id);
     }
     
     @GetMapping(path = "/doctors/speciality/{speciality}")
-    public @ResponseBody List<DoctorInfo> searchDoctorBySpeciality(@PathVariable String speciality) {
-        return doctorInfoService.findDoctorsBySpeciality(speciality);
-    }
-    
-    @GetMapping(path = "/doctors/speciality/{speciality}")
     public @ResponseBody Iterable<DoctorInfo> searchDoctorBySpeciality(@PathVariable String speciality) {
+        System.out.println("\n\n\n");
+        System.out.println(speciality);
+        // return new ArrayList<DoctorInfo>();
+        Iterable<DoctorInfo> l = doctorInfoService.findDoctorsBySpeciality(speciality);
+        for (DoctorInfo ld : l)
+            System.out.println(ld.getName());
+        System.out.println("\n\n\n");
         return doctorInfoService.findDoctorsBySpeciality(speciality);
-    }
+    } 
 
     @GetMapping(path = "/doctors/all")
-    public List<DoctorInfo> retrieveAllDoctors() {
+    public Iterable<DoctorInfo> retrieveAllDoctors() {
         return doctorInfoService.getAllDoctors();
     }
     
