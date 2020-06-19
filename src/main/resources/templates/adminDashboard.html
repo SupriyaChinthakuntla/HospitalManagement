@@ -24,6 +24,8 @@
     <div th:if="${currentUserInfo}"
         th:text="'Welcome ' + ${currentUserInfo.getFname()} + ' ' + ${currentUserInfo.getLname()} + ' (' + ${currentUserInfo.getEmail()} + ')'">
     </div>
+    <div th:if="${doctorAddedSuccessfullyMsg}" class="alert alert-success" role="alert"
+                 th:text="${doctorAddedSuccessfullyMsg}"></div>
     <div class="container-fluid m-4">
         <h4 class="display-4 mb-3">Register New Doctor</h4>
         <form class="form-inline" autocomplete="off" action="#" th:action="@{/createDoctor}" th:object="${dummyUserInfo}" method="POST">

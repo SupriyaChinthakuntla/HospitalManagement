@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -53,10 +54,13 @@ public class DashboardController {
     }
 
     @GetMapping("/admin")
-    public ModelAndView showDashboard(ModelAndView modelAndView) {
+    public ModelAndView showDashboard(ModelAndView modelAndView, @RequestParam(required=false) boolean success) {
 
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal.getUserInfo().getRole().equals("admin")) {
+        	if (success) {
+        		modelAndView.addObject("doctorAddedSuccessfullyMsg", "Doctor created successfully!");
+        	}
             refreshDashboard(modelAndView);
         } else{
             return new ModelAndView("redirect:/appointments", modelAndView.getModel());
@@ -81,8 +85,7 @@ public class DashboardController {
         da.setDoctorAvailableTime(new Timestamp(System.currentTimeMillis()));
         da.setDoctorId(d.getId());
         doctorAvailabilityService.saveAvailability(da);
-        return new ModelAndView("redirect:/admin", modelAndView.getModel());
-        
+        return new ModelAndView("redirect:/admin?success=true", modelAndView.getModel());
     }
 
     private ModelAndView refreshDashboard(ModelAndView modelAndView){
