@@ -31,7 +31,7 @@ public class DoctorAvailabilityController {
 
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserInfo userInfo = principal.getUserInfo();
-        modelAndView.addObject("docSpecialtyList",Arrays.asList("Ortho","Cardiologist", "Neurologist", "Orthopedist"));
+        modelAndView.addObject("docSpecialtyList",Arrays.asList("Cardiologist", "Neurologist", "Orthopedist","Radiologist","Pediatrician"));
         modelAndView.addObject("user", userInfo);
         modelAndView.addObject("doctorInfoService", doctorInfoService);
         modelAndView.setViewName("patientHome");

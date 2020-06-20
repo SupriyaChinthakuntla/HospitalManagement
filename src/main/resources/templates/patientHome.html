@@ -61,7 +61,6 @@ $(document).ready(function() {
 				for(var i = 0; i < result.length; i++) {
 					s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
 				}
-					s += '<option value="' + 777 + '">' + "TESTING" + '</option>';
 				/*[[${docList}]]*/ 'default' = result;
 				var message = /*[[${docList}]]*/ 'default';
     			console.log(message);
@@ -109,8 +108,9 @@ $(document).ready(function() {
 			
 			<p>
 			<label>Date and Time</label> 
-				<select class="form-control" id="appointmentIdx" name="availability" th:field="*{doctorAvailableTime}">
-				<option value="">Select...</option>
+            	<input type="datetime-local" th:field="*{doctorAvailableTime}" placeholder="SELECT DATE" />
+				<!-- <select class="form-control" id="appointmentIdx" name="availability" th:field="*{doctorAvailableTime}">
+				<option value="">Select...</option> -->
 			</select> 
 			</p>
 	

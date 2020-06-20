@@ -38,7 +38,7 @@ public class PatientInfoService {
     public PatientInfo findByUserId(Integer ID){
         for(PatientInfo p : patients)
             if(p.getUserInfoId().equals(ID))
-                return p;
+                return p; 
         return patientInfoRepository.findById(ID).orElse(null);
     }
 
@@ -47,6 +47,11 @@ public class PatientInfoService {
     }
     public String getPatientName(PatientInfo patient){
         UserInfo userInfo = this.userInfoService.findById(patient.getUserInfoId());
+		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+    }
+    
+    public String getPatientName_ID(Integer patId){
+        UserInfo userInfo = this.userInfoService.findById(patId);
 		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
     }
 

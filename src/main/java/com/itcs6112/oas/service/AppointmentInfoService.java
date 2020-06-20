@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,6 +81,56 @@ public class AppointmentInfoService{
     
     public Iterable<AppointmentInfo> findByPatientId(Integer id) {
         return appointmentInfoRepository.findByPatientId(id);
+    }
+    public Iterable<AppointmentInfo> findByPatientId_future(Integer id) {
+        Iterable<AppointmentInfo> l = appointmentInfoRepository.findByPatientId(id);
+        ArrayList<AppointmentInfo> ll = new ArrayList<AppointmentInfo>();
+        for (AppointmentInfo a : l){
+            if (a.getStartDate().after(new Date(System.currentTimeMillis()))){
+                ll.add(a);
+            }
+        }
+        //     System.out.println(a.getDoctorId());
+        return ll;
+    }
+    public Iterable<AppointmentInfo> findByPatientId_past(Integer id) {
+        Iterable<AppointmentInfo> l = appointmentInfoRepository.findByPatientId(id);
+        ArrayList<AppointmentInfo> ll = new ArrayList<AppointmentInfo>();
+        for (AppointmentInfo a : l){
+            if (a.getStartDate().before(new Date(System.currentTimeMillis()))){
+                ll.add(a);
+            }
+        }
+        //     System.out.println(a.getDoctorId());
+        return ll;
+    }
+    
+    public Iterable<AppointmentInfo> findByDoctorId(Integer id) {
+        return appointmentInfoRepository.findByDoctorId(id);
+    }
+
+    public Iterable<AppointmentInfo> findByDoctorId_future(Integer id) {
+        Iterable<AppointmentInfo> l = appointmentInfoRepository.findByDoctorId(id);
+        ArrayList<AppointmentInfo> ll = new ArrayList<AppointmentInfo>();
+        for (AppointmentInfo a : l){
+            if (a.getStartDate().after(new Date(System.currentTimeMillis()))){
+                ll.add(a);
+            }
+        }
+        //     System.out.println(a.getDoctorId());
+        return ll;
+    }
+
+    public Iterable<AppointmentInfo> findByDoctorId_past(Integer id) {
+        Iterable<AppointmentInfo> l = appointmentInfoRepository.findByDoctorId(id);
+        ArrayList<AppointmentInfo> ll = new ArrayList<AppointmentInfo>();
+        for (AppointmentInfo a : l){
+            if (a.getStartDate().before(new Date(System.currentTimeMillis()))){
+                ll.add(a);
+            }
+        }
+        //     System.out.println(a.getDoctorId());
+        return ll;
     }
 
     public Iterable<AppointmentInfo> getAllAppointments() {

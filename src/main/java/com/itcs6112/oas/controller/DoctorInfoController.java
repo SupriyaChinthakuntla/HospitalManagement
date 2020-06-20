@@ -31,9 +31,13 @@ public class DoctorInfoController{
     
     @GetMapping(path="/doctors")
     public ModelAndView dashboard(ModelAndView modelAndView) {
+
+
         userInfoService.fetchAllUsers();
         UserInfoPrincipal principal = (UserInfoPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserInfo userInfo = principal.getUserInfo();
+        if (!principal.getUserInfo().getRole().equals("patient"))
+            return new ModelAndView("redirect:/", modelAndView.getModel());
         modelAndView.addObject("docList",new ArrayList<DoctorInfo>());
         modelAndView.addObject("docSpecialtyList",Arrays.asList("Cardiologist", "Neurologist", "Orthopedist"));
         modelAndView.addObject("user", userInfo);
@@ -43,15 +47,6 @@ public class DoctorInfoController{
         return modelAndView;
     }
     
-    // @ModelAttribute("doctors")
-    // public Iterable<DoctorInfo> addAttributes(Model model) {
-    // 	return doctorInfoService.getAllDoctors();
-    // }
-    
-    // @PostMapping(path="/add") 
-    // public @ResponseBody String addNewDoctor(@RequestBody Map<String, Object> requestBody){
-    //     return doctorInfoService.addNewDoctor(requestBody)? "ADDED NEW DOCTOR" : "ENCOUNTERED ERROR ADDING NEW DOCTOR";
-    // }
     
     @GetMapping(path = "/doctors/{id}")
     public @ResponseBody DoctorInfo searchDoctorById(@PathVariable Integer id) {
@@ -60,31 +55,21 @@ public class DoctorInfoController{
     
     @GetMapping(path = "/doctors/speciality/{speciality}")
     public @ResponseBody Iterable<DoctorInfo> searchDoctorBySpeciality(@PathVariable String speciality) {
-        System.out.println("\n\n\n");
-        System.out.println(speciality);
-        // return new ArrayList<DoctorInfo>();
         Iterable<DoctorInfo> l = doctorInfoService.findDoctorsBySpeciality(speciality);
         for (DoctorInfo ld : l)
             System.out.println(ld.getName());
-        System.out.println("\n\n\n");
         return doctorInfoService.findDoctorsBySpeciality(speciality);
     } 
 
-    @GetMapping(path = "/doctors/all")
-    public Iterable<DoctorInfo> retrieveAllDoctors() {
-        return doctorInfoService.getAllDoctors();
-    }
+    // @GetMapping(path = "/doctors/all")
+    // public Iterable<DoctorInfo> retrieveAllDoctors() {
+    //     return doctorInfoService.getAllDoctors();
+    // }
     
     
-    @PostMapping("/bookAppointment")
-    public ModelAndView scheduleAppointment(AppointmentInfo appointmentInfo, Model model) {
-    // DO POST APPOINTMENT HERE
-    	return modelView;
-    }
-    
-    @GetMapping(path = "/showAppointments")
-    public String showAppointments() {
-    	return "redirect:appointmentList";
-    }
+    // @GetMapping(path = "/showAppointments")
+    // public String showAppointments() {
+    // 	return "redirect:appointmentList";
+    // }
 
 }

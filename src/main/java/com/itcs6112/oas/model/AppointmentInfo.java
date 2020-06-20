@@ -20,12 +20,6 @@ public class AppointmentInfo{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Override
-	public String toString() {
-		return "AppointmentInfo [id=" + id + ", patientId=" + patientId + ", doctorId=" + doctorId + ", notes=" + notes
-				+ ", reasonForVisit=" + reasonForVisit + ", date_start=" + startDate + ", date_end=" + endDate 
-				+ ", cancelled=" + cancelled + "]";
-	}
 	@Column(name = "patient_id")
 	// @NotEmpty
 	private Integer patientId;
@@ -48,15 +42,6 @@ public class AppointmentInfo{
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date endDate;
 
-	@Transient
-	private String startDateString;
-	
-	@Transient
-	private String endDateString;
-	public void setStartDateString(String dateStartString){this.startDateString = dateStartString;}
-	public void setEndDateString(String dateEndString){this.endDateString = dateEndString; }
-	public String getStartDateString(){return this.startDateString;}
-	public String getEndDateString(){return this.endDateString; }
 	
 	
 	public AppointmentInfo() {}
@@ -67,8 +52,6 @@ public class AppointmentInfo{
 		this.startDate = date_start;
 	}
 	
-	@Column(name = "cancelled")
-	private Boolean cancelled;
 	
 	//setters
 	public void setPatientId(Integer id){
@@ -88,9 +71,6 @@ public class AppointmentInfo{
 	}
 	public void setEndDate(Date date){
 		this.endDate= date;
-	}
-	public void setCancelled(Boolean cancelled){
-		this.cancelled = cancelled;
 	}
 	
 	//getters
@@ -123,10 +103,4 @@ public class AppointmentInfo{
 	public Date getEndDate(){
 		return this.endDate;
 	}
-	// public void setReasonForVisit(String reasonForVisit) {
-	// 	this.reasonForVisit = reasonForVisit;
-	// }
-	// public Boolean getCancelled(){
-	// 	return this.cancelled;
-	// }
 }

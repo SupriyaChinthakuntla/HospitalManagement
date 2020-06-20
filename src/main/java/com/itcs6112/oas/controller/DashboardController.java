@@ -3,6 +3,7 @@ package com.itcs6112.oas.controller;
 import java.sql.Timestamp;
 import java.util.Arrays;
 
+import com.itcs6112.oas.model.AppointmentForm;
 import com.itcs6112.oas.model.AppointmentInfo;
 import com.itcs6112.oas.model.DoctorAvailability;
 import com.itcs6112.oas.model.DoctorInfo;
@@ -59,7 +60,7 @@ public class DashboardController {
         if (principal.getUserInfo().getRole().equals("admin")) {
             refreshDashboard(modelAndView);
         } else{
-            return new ModelAndView("redirect:/appointments", modelAndView.getModel());
+            return new ModelAndView("redirect:/", modelAndView.getModel());
 
         }
         return modelAndView;
@@ -73,7 +74,7 @@ public class DashboardController {
         d.setName(userInfo.getFname() + " " + userInfo.getLname());
         d.setUserInfoId(userInfo.getId()); // associate this new doctor with UserInfo object populated by thymeleaf form
         userInfo.setRole("doctor"); // set this user's role to doctor
-        userInfo.setPassword("defaultpassword"); // set the password to a default (user would change at later date)
+        userInfo.setPassword("password"); // set the password to a default (user would change at later date)
 
         doctorInfoService.saveDoctor(d);
         
@@ -90,7 +91,8 @@ public class DashboardController {
         this.patientInfoService.fetchAllPatients();
         this.userInfoService.fetchAllUsers();
         this.appointmentInfoService.fetchAllAppointments();
-        modelAndView.addObject("docSpecialtyList",Arrays.asList("Cardiologist", "Neurologist", "Orthopedist"));
+        modelAndView.addObject("docSpecialtyList",Arrays.asList("Cardiologist", "Neurologist", "Orthopedist","Radiologist","Pediatrician"));
+        modelAndView.addObject("appointmentForm", new AppointmentForm());
         modelAndView.addObject("docInfoService",this.doctorInfoService);
         modelAndView.addObject("apptInfoService",this.appointmentInfoService);
         modelAndView.addObject("patInfoService",this.patientInfoService);

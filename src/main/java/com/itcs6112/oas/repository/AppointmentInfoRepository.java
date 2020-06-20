@@ -8,5 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface AppointmentInfoRepository extends CrudRepository<AppointmentInfo, Integer> {
 	List<AppointmentInfo> findByPatientId(Integer patientId);
+	List<AppointmentInfo> findByDoctorId(Integer doctorId);
 
 }

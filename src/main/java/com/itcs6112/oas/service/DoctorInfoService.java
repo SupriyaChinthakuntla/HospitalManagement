@@ -37,6 +37,12 @@ public class DoctorInfoService{
                 return d;
         return doctorInfoRepository.findById(ID).orElse(null);
     }
+    public DoctorInfo findByUserInfoId(Integer ID){
+        for(DoctorInfo d : doctors)
+            if(d.getUserInfoId().equals(ID))
+                return d;
+        return doctorInfoRepository.findByUserInfoId(ID).orElse(null);
+    }
     
     public Iterable<DoctorInfo> findDoctorsBySpeciality(String specialty){
         return doctorInfoRepository.findBySpecialty(specialty);
