@@ -61,7 +61,6 @@
             <th scope="col">Doctor Name</th>
             <th scope="col">Appointment Time</th>
             <th scope="col">Reason for Visit</th>
-            <th scope="col">Doctor Notes</th>
         </tr>
         </thead>
         <tbody>
@@ -69,7 +68,6 @@
             <td th:text="${docInfoService.getDoctorName(appointment.getDoctorId())}"></td>
             <td th:text="${appointment.getStartDate()}"></td>
             <td th:text="${appointment.getReasonForVisit()}"></td>
-            <td th:text="${appointment.getNotes()}"></td>
         </tr>
         </tbody>
     </table>

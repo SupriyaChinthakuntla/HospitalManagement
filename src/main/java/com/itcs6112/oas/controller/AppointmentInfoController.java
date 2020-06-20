@@ -92,7 +92,7 @@ public class AppointmentInfoController {
         }
 
         if (!bindingResult.hasErrors()) {
-            // Mailer.send(principal.getUserInfo(), appointmentInfo); 
+             Mailer.send(principal.getUserInfo(), appointmentInfo); 
         } 
         
         appointmentInfoService.createAppointment(appointmentInfo);
