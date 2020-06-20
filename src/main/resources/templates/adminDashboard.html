@@ -39,16 +39,15 @@
     </div>
     <div class="container-fluid m-4">
         <h4 class="display-4 mb-3">Create New Appointment</h4>
-        <form autocomplete="off" action="#" th:action="@{/appointments}" th:object="${appointmentForm}" method="POST">
-		<!-- th:action="@{/appointments}" th:object="${appointmentForm}" method="post" class="m-t" role="form"> -->
-            <select th:field="*{doctorId}">
+        <form class="form-inline"autocomplete="off" action="#" th:action="@{/appointments}" th:object="${appointmentForm}" method="POST">
+            <select class="form-control" th:field="*{doctorId}">
                 <option th:each="doc: ${docInfoService.getAllDoctors()}" th:value="${doc.getId()}" th:text="${docInfoService.getDoctorName(doc.getId())}"></option>
             </select>
-            <select th:field="*{patientId}">
+            <select  class="form-control" th:field="*{patientId}">
                 <option th:each="pat: ${patInfoService.getAllPatients()}" th:value="${pat.getUserInfoId()}" th:text="${patInfoService.getPatientName(pat.getId())}"></option>
             </select>
-            <input type="text" th:field="*{reasonForVisit}" placeholder="Reason for visit" />
-            <input type="datetime-local" th:field="*{doctorAvailableTime}" placeholder="SELECT DATE" />
+            <input type="text"  class="form-control" th:field="*{reasonForVisit}" placeholder="Reason for visit" />
+            <input type="datetime-local"  class="form-control" th:field="*{doctorAvailableTime}" placeholder="SELECT DATE" />
             <button type="submit" class="btn btn-primary block full-width m-b">Create Appt</button>
         </form>
     </div>
