@@ -83,7 +83,6 @@ public class DashboardController {
         da.setDoctorId(d.getId());
         doctorAvailabilityService.saveAvailability(da);
         return new ModelAndView("redirect:/admin", modelAndView.getModel());
-        
     }
 
     private ModelAndView refreshDashboard(ModelAndView modelAndView){
