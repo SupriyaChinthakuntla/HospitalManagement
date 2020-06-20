@@ -1,77 +1,98 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>OAS Doctor Dashboard</title>
+
     <!-- Bootstrap core CSS -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
     <!-- jQuery-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-</head>
-<style>
-    /*div {*/
-    /*    padding-top: 20px;*/
-    /*    padding-bottom: 20px;*/
-    /*    padding-left: 20px;*/
-    /*}*/
-</style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h2>OAS Doctor</h2>
-<div class="container-fluid m-4">
-<!-- <a href="#" th:href="@{'/doctors'}">Schedule new appointment</a> -->
-    <h1 class="display-4 mb-3">Future Appointments</h1>
+    <!-- Nav Bar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" th:href="@{'/appointments'}">View Appointments</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mx-auto order-0">
+            <span class="navbar-brand mx-auto">Online Appointment System - Doctor</span>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{'/logout'}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Patient Name</th>
-            <th scope="col">Appointment Time</th>
-            <th scope="col">Reason for Visit</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="appointment : ${appointments_future}">
-            <td th:text="${patientInfoService.getPatientName_ID(appointment.getPatientId())}"></td>
-            <td th:text="${appointment.getStartDate()}"></td>
-            <td th:text="${appointment.getReasonForVisit()}"></td>
-            <td><a href="#" th:href="@{'/appointments/' + ${appointment.getId()} + '/cancel'}" class="btn btn-sm btn-danger">Cancel</a></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<br>
-<br>
-<div class="container-fluid m-4">
-    <h1 class="display-4 mb-3">Past Appointments</h1>
+    <!-- Content -->
+    <div class="container-fluid">
+        <!-- Upcoming Appointments List -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <h4>Upcoming Appointments</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Appointment Time</th>
+                        <th scope="col">Reason for Visit</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="appointment : ${appointments_future}">
+                        <td th:text="${patientInfoService.getPatientName_ID(appointment.getPatientId())}"></td>
+                        <td th:text="${appointment.getStartDate()}"></td>
+                        <td th:text="${appointment.getReasonForVisit()}"></td>
+                        <td><a href="#" th:href="@{'/appointments/' + ${appointment.getId()} + '/cancel'}" class="btn btn-sm btn-danger">Cancel</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Patient Name</th>
-            <th scope="col">Appointment Time</th>
-            <th scope="col">Reason for Visit</th>
-            <th scope="col">Doctor Notes</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="appointment : ${appointments_past}">
-            <td th:text="${patientInfoService.getPatientName_ID(appointment.getPatientId())}"></td>
-            <td th:text="${appointment.getStartDate()}"></td>
-            <td th:text="${appointment.getReasonForVisit()}"></td>
-            <td th:text="${appointment.getNotes()}"></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-    <div class="margin-top20 text-center">
-        <a th:href="@{/logout}">Logout</a>
+        <!-- Past Appointments List -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <h4>Past Appointments</h4>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Patient Name</th>
+                        <th scope="col">Appointment Time</th>
+                        <th scope="col">Reason for Visit</th>
+                        <th scope="col">Doctor Notes</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="appointment : ${appointments_past}">
+                        <td th:text="${patientInfoService.getPatientName_ID(appointment.getPatientId())}"></td>
+                        <td th:text="${appointment.getStartDate()}"></td>
+                        <td th:text="${appointment.getReasonForVisit()}"></td>
+                        <td th:text="${appointment.getNotes()}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 </html>

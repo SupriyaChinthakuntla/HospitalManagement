@@ -82,7 +82,7 @@ public class AppointmentInfoController {
 
         DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
         Date d2 = df2.parse(appointmentForm.getDoctorAvailableTime());
-        AppointmentInfo appointmentInfo = new AppointmentInfo();
+        AppointmentInfo appointmentInfo;
 
         if (appointmentForm.getPatientId() != null){
             appointmentInfo = new AppointmentInfo(appointmentForm.getPatientId(), appointmentForm.getDoctorId(), appointmentForm.getReasonForVisit(), d2);
@@ -92,7 +92,8 @@ public class AppointmentInfoController {
         }
 
         if (!bindingResult.hasErrors()) {
-             Mailer.send(principal.getUserInfo(), appointmentInfo); 
+            UserInfo ui = userInfoService.findById(appointmentInfo.getPatientId());
+            Mailer.send(ui, appointmentInfo);
         } 
         
         appointmentInfoService.createAppointment(appointmentInfo);

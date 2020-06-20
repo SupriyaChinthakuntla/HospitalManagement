@@ -1,137 +1,133 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>OAS Patient Registration</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>OAS New Appointment</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
-    <!-- jQuery-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-    <!-- Bootstrap Validator plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.9/validator.min.js"></script>
-</head>
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+	<!-- jQuery-->
+	<script	src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-<style>
-	div {
-		padding-left: 20px;
-	}
-</style>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-<!-- <script type="text/javascript">  -->
-<script th:inline="javascript">
-/*<![CDATA[*/
-
-function setSpeciality(doctorId) {
-	$.ajax({
-		type: 'GET',
-		url: '/availability/' + doctorId,
-		success: function(result) {
-			var s = '';
-			for(var i = 0; i < result.length; i++) {
-				s += '<option value="' + result[i].doctorAvailableTime + '">' + result[i].doctorAvailableTime + '</option>';
-			}
-			$('#appointmentIdx').html(s);
-		}
-	});
-}
-
-
-$(document).ready(function() {
-
-	$('#specialityIdx').on('change', function(){
-         var speciality = $(this).val();
-		 console.log(speciality);
-		$.ajax({
-			type: 'GET',
-			url: '/doctors/speciality/' + speciality,
-			// url: '/doctors/speciality/ortho',
-			success: function(result) {
-				// console.log(result)	;
-				var s = '';
-				for(var i = 0; i < result.length; i++) {
-					s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+		function setSpeciality(doctorId) {
+			$.ajax({
+				type: 'GET',
+				url: '/availability/' + doctorId,
+				success: function(result) {
+					var s = '';
+					for(var i = 0; i < result.length; i++) {
+						s += '<option value="' + result[i].doctorAvailableTime + '">' + result[i].doctorAvailableTime + '</option>';
+					}
+					$('#appointmentIdx').html(s);
 				}
-				/*[[${docList}]]*/ 'default' = result;
-				var message = /*[[${docList}]]*/ 'default';
-    			console.log(message);
-				$('#doctorIdx').html(s);
-					var doctorId = result[0].id;
-					setSpeciality(doctorId);
-				
-			}
+			});
+		}
+
+		$(document).ready(function() {
+
+			$('#specialityIdx').on('change', function(){
+				 var speciality = $(this).val();
+				 console.log(speciality);
+				$.ajax({
+					type: 'GET',
+					url: '/doctors/speciality/' + speciality,
+					// url: '/doctors/speciality/ortho',
+					success: function(result) {
+						// console.log(result)	;
+						var s = '';
+						for(var i = 0; i < result.length; i++) {
+							s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+						}
+						// /*[[${docList}]]*/ 'default' = result;
+						var message = /*[[${docList}]]*/ 'default';
+						console.log(message);
+						$('#doctorIdx').html(s);
+							var doctorId = result[0].id;
+							setSpeciality(doctorId);
+
+					}
+				});
+			});
+
+			$('#doctorIdx').on('change', function(){
+				var doctorId = $(this).val();
+				setSpeciality(doctorId);
+			});
+
 		});
-	}); 
+	/*]]>*/
+	</script>
 
-	$('#doctorIdx').on('change', function(){
-		var doctorId = $(this).val();
-		setSpeciality(doctorId);
-	});
-
-});
-/*]]>*/
-</script>
-
+	<style type="text/css">
+		body, html {
+			height: 75%;
+		}
+	</style>
 </head>
 <body>
-<div align="center">
-	<form autocomplete="on" id="appointmentForm" 
-		th:action="@{/appointments}" th:object="${appointmentForm}" method="post" class="m-t" role="form">
-
-		<h3>Schedule an Appointment</h3>
-		<div class="col-sm-4 form-group">
-
-			<p><label>Speciality</label> 
-			<select class="form-control selectpicker" id="specialityIdx" name="speciality">
-				<option value="">Select...</option>
-				<option th:each="speciality: ${docSpecialtyList}"
-					th:value="${speciality}" th:text="${speciality}">
-				</option> 
-			</select>
-			</p>
-			
-			<p>
-			<label>Doctor</label> 
-				<select class="form-control" id="doctorIdx" name="name" th:field="*{doctorId}">
-				<option value="">Select...</option>
-				</select>
-			</p>
-			
-			<p>
-			<label>Date and Time</label> 
-            	<input type="datetime-local" th:field="*{doctorAvailableTime}" placeholder="SELECT DATE" />
-				<!-- <select class="form-control" id="appointmentIdx" name="availability" th:field="*{doctorAvailableTime}">
-				<option value="">Select...</option> -->
-			</select> 
-			</p>
-	
-			<p>
-				<label>Reason for Visit</label>
-				<br>
-				<input class="form-control" type="text" id="reasonToVisit" th:field="*{reasonForVisit}"/>
-			</p>
-		
-			<button type="submit"
-	            class="btn btn-primary block full-width m-b">Confirm
-	        </button>
+	<!-- Nav Bar -->
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-3">
+		<div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{'/appointments'}">View Appointments</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" th:href="@{'/doctors'}">New Appointment</a>
+				</li>
+			</ul>
 		</div>
-	</form>
-	
-	<a th:href="@{/appointments}">View Past and Future Appointments</a>
-	<br>
-	
-	<a th:href="@{/logout}">Logout</a>
-	
-	
-</div>
+		<div class="mx-auto order-0">
+			<span class="navbar-brand mx-auto">Online Appointment System - Patient</span>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+		<div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{'/logout'}">Logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container h-100">
+		<div class="row h-100 justify-content-center align-items-center">
+			<form class="col-6" autocomplete="on" id="appointmentForm" th:action="@{/appointments}" th:object="${appointmentForm}" method="post" role="form">
+				<h4 class="text-center">Schedule an Appointment</h4>
+				<div class="form-group">
+					<label for="specialityIdx">Speciality</label>
+					<select class="form-control selectpicker" id="specialityIdx" name="speciality">
+						<option value="">Select...</option>
+						<option th:each="speciality: ${docSpecialtyList}" th:value="${speciality}" th:text="${speciality}"></option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="doctorIdx">Doctor</label>
+					<select class="form-control" id="doctorIdx" name="name" th:field="*{doctorId}">
+						<option value="">Select...</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="availability">Date and Time</label>
+					<input type="datetime-local" id="availability" th:field="*{doctorAvailableTime}" placeholder="SELECT DATE" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label for="reasonToVisit">Reason for Visit</label>
+					<input class="form-control" type="text" id="reasonToVisit" th:field="*{reasonForVisit}"/>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="form-control btn btn-primary block full-width m-b">Confirm Appointment</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 </html>
