@@ -1,11 +1,15 @@
 package com.itcs6112.oas.service;
 
 import com.itcs6112.oas.model.AppointmentInfo;
+import com.itcs6112.oas.model.DoctorInfo;
+import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.AppointmentInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -13,50 +17,133 @@ public class AppointmentInfoService{
 
     @Autowired
     private AppointmentInfoRepository appointmentInfoRepository;
-    
+    @Autowired
+    private UserInfoService userInfoService;
+    @Autowired
+    private DoctorInfoService doctorInfoService;
+   
+    private Iterable<AppointmentInfo> appointments;
     public AppointmentInfoService(AppointmentInfoRepository appointmentInfoRepository){
         this.appointmentInfoRepository = appointmentInfoRepository;
     }
+    
+    public String getInfoString(AppointmentInfo appt){
+        DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorId());
+        UserInfo userInfo_1 = this.userInfoService.findById(doctorInfo.getUserInfoId());
+        // PatientInfo patientInfo = this.patientInfoService.findById(appt.getPatientId());
+        UserInfo userInfo_2 = this.userInfoService.findById(appt.getPatientId());// not quite to schema
+        
+        String doc_name = userInfo_1.getFname() + " " + userInfo_1.getLname();
+        String pat_name = userInfo_2.getFname() + " " + userInfo_2.getLname();
+        // String pat_name = "WHY CANT I GET THIS TO WORK";
+        String date = appt.getStartDate().toString();
+        String reason = appt.getReasonForVisit();
+        return String.format("Doctor: %s | Patient: %s | Appt Date: %s | Reason: %s",doc_name,pat_name,date,reason);
 
-    public boolean addNewAppointment(Map<String,Object> requestBody){
-        return createNewAppointment(requestBody);
     }
+    
+    public String getPatientName(AppointmentInfo appt){
+        // PatientInfo patientInfo = this.patientInfoService.findById(appt.getDoctorId());
+        UserInfo userInfo= this.userInfoService.findById(appt.getPatientId());
+		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+    }
+    
+    public String getDoctorName(AppointmentInfo appt){
+        DoctorInfo doctorInfo = this.doctorInfoService.findById(appt.getDoctorId());
+        UserInfo userInfo= this.userInfoService.findById(doctorInfo.getUserInfoId());
+		return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
+    }
+    
+    public String getReason(AppointmentInfo appt){
+		return appt.getReasonForVisit();
+    }
+
+    public String getStartDate(AppointmentInfo doc){
+        return doc.getStartDate().toString();
+    }
+    public String getEndDate(AppointmentInfo doc){
+        return doc.getEndDate().toString();
+    }
+
+    public AppointmentInfo createAppointment(AppointmentInfo appointmentInfo) {
+        return appointmentInfoRepository.save(appointmentInfo);
+    }
+
+    public void cancelAppointment(Integer id) { appointmentInfoRepository.deleteById(id); }
     
     public Optional<AppointmentInfo> findById(Integer id) {
         return appointmentInfoRepository.findById(id);
     }
+    
+    public void fetchAllAppointments() {
+        this.appointments = appointmentInfoRepository.findAll();
+    }
+    
+    public Iterable<AppointmentInfo> findByPatientId(Integer id) {
+        return appointmentInfoRepository.findByPatientId(id);
+    }
+    public Iterable<AppointmentInfo> findByPatientId_future(Integer id) {
+        Iterable<AppointmentInfo> l = appointmentInfoRepository.findByPatientId(id);
+        ArrayList<AppointmentInfo> ll = new ArrayList<AppointmentInfo>();
+        for (AppointmentInfo a : l){
+            if (a.getStartDate().after(new Date(System.currentTimeMillis()))){
+                ll.add(a);
+            }
+        }
+        //     System.out.println(a.getDoctorId());
+        return ll;
+    }
+    public Iterable<AppointmentInfo> findByPatientId_past(Integer id) {
+        Iterable<AppointmentInfo> l = appointmentInfoRepository.findByPatientId(id);
+        ArrayList<AppointmentInfo> ll = new ArrayList<AppointmentInfo>();
+        for (AppointmentInfo a : l){
+            if (a.getStartDate().before(new Date(System.currentTimeMillis()))){
+                ll.add(a);
+            }
+        }
+        //     System.out.println(a.getDoctorId());
+        return ll;
+    }
+    
+    public Iterable<AppointmentInfo> findByDoctorId(Integer id) {
+        return appointmentInfoRepository.findByDoctorId(id);
+    }
+
+    public Iterable<AppointmentInfo> findByDoctorId_future(Integer id) {
+        Iterable<AppointmentInfo> l = appointmentInfoRepository.findByDoctorId(id);
+        ArrayList<AppointmentInfo> ll = new ArrayList<AppointmentInfo>();
+        for (AppointmentInfo a : l){
+            if (a.getStartDate().after(new Date(System.currentTimeMillis()))){
+                ll.add(a);
+            }
+        }
+        //     System.out.println(a.getDoctorId());
+        return ll;
+    }
+
+    public Iterable<AppointmentInfo> findByDoctorId_past(Integer id) {
+        Iterable<AppointmentInfo> l = appointmentInfoRepository.findByDoctorId(id);
+        ArrayList<AppointmentInfo> ll = new ArrayList<AppointmentInfo>();
+        for (AppointmentInfo a : l){
+            if (a.getStartDate().before(new Date(System.currentTimeMillis()))){
+                ll.add(a);
+            }
+        }
+        //     System.out.println(a.getDoctorId());
+        return ll;
+    }
 
     public Iterable<AppointmentInfo> getAllAppointments() {
-        return appointmentInfoRepository.findAll();
+        return this.appointments;
+    }
+    public Iterable<AppointmentInfo> findAll() {
+    	List<AppointmentInfo> appointmentList = new ArrayList<>();  
+    	appointmentInfoRepository.findAll().forEach(appointmentList::add);
+        return appointmentList;
     }
 
     public void saveAppointment(AppointmentInfo user) {
         appointmentInfoRepository.save(user);
     }
     
-    // returns true if a new user is successfully created and added to the database
-    private boolean createNewAppointment(Map<String,Object>requestBody){
-        // check to see if the request is properly formed, and create new user
-        // Minimal error checking done
-        if (checkNewApptRequest(requestBody)){
-            AppointmentInfo a = new AppointmentInfo();
-            a.setApptNotes((String) requestBody.get("appt_notes")); 
-            a.setCancelled((Boolean) requestBody.get("cancelled"));
-            a.setDate((Date) requestBody.get("date"));
-            a.setDoctorId((Integer) requestBody.get("doctor_id")); 
-            a.setPatientId((Integer) requestBody.get("patient_id")); 
-            saveAppointment(a);
-            System.out.println(a);
-            return true;
-        }
-        return false;
-    }
-    // helper function to determine if new user request has all data fields
-    private boolean checkNewApptRequest(Map<String,Object>requestBody){
-        String [] l = {"patient_id","doctor_id","appt_notes","reason_for_visit","cancelled","date"};
-        for (String k : l)
-            if(!requestBody.containsKey(k))
-                return false;
-        return true;
-    }
 }

@@ -1,58 +1,73 @@
 package com.itcs6112.oas.service;
 
 import com.itcs6112.oas.model.DoctorInfo;
+import com.itcs6112.oas.model.UserInfo;
 import com.itcs6112.oas.repository.DoctorInfoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Map;
-import java.util.Optional;
+
+
 
 @Service
 public class DoctorInfoService{
 
     @Autowired
     private DoctorInfoRepository doctorInfoRepository;
+    @Autowired
+    private UserInfoService userInfoService;
     
+    private Iterable<DoctorInfo> doctors;
+
     public DoctorInfoService(DoctorInfoRepository doctorInfoRepository){
         this.doctorInfoRepository = doctorInfoRepository; 
     }
     
-    public Iterable<DoctorInfo> getAllDoctors(){
-        return doctorInfoRepository.findAll();
-    }
-   
-    public Optional<DoctorInfo> findById(Integer ID){
-        return doctorInfoRepository.findById(ID);
+    public void fetchAllDoctors(){
+        this.doctors = doctorInfoRepository.findAll();
     }
     
-    public Optional<Iterable<DoctorInfo>> findDoctorsBySpecialty(String specialty){
+    public Iterable<DoctorInfo> getAllDoctors(){
+        return this.doctors;
+    }
+   
+    public DoctorInfo findById(Integer ID){
+        for(DoctorInfo d : doctors)
+            if(d.getId().equals(ID))
+                return d;
+        return doctorInfoRepository.findById(ID).orElse(null);
+    }
+    public DoctorInfo findByUserInfoId(Integer ID){
+        for(DoctorInfo d : doctors)
+            if(d.getUserInfoId().equals(ID))
+                return d;
+        return doctorInfoRepository.findByUserInfoId(ID).orElse(null);
+    }
+    
+    public Iterable<DoctorInfo> findDoctorsBySpeciality(String specialty){
         return doctorInfoRepository.findBySpecialty(specialty);
     }
-  
-    public boolean addNewDoctor(Map<String,Object> requestBody){
-        return createNewDoctor(requestBody);
-    }
-
+    
     public void saveDoctor(DoctorInfo doctor) {
         doctorInfoRepository.save(doctor);
     }
     
-    // returns true if a new patient is successfully created and added to the database
-    private boolean createNewDoctor(Map<String,Object>requestBody){
-        // check to see if the request is properly formed, and create new patient 
-        // Minimal error checking done
-        if (checkNewDoctorRequest(requestBody)){
-            DoctorInfo d = new DoctorInfo();
-            d.setSpecialty((String) requestBody.get("specialty"));
-        }
-        return false;
+    public String getDoctorName(DoctorInfo doc){
+        UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
+        return userInfo != null ? userInfo.getFname() + " " + userInfo.getLname(): "N/A";
     }
-    // helper function to determine if new patient request has all data fields 
-    private boolean checkNewDoctorRequest(Map<String,Object>requestBody){
-        String [] l = {"specialty"};
-        for (String k : l)
-            if(!requestBody.containsKey(k))
-                return false;
-        return true;
+
+	public String getDoctorEmail(DoctorInfo doc){
+        UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
+		return userInfo != null ? userInfo.getEmail() : "N/A";
     }
+	public String getDoctorSpecialty(DoctorInfo doc){
+		return doc.getSpeciality();
+    }
+  
+	// public String getInfoString(Integer id){
+	// public String getInfoString(DoctorInfo doc){
+    //     UserInfo userInfo = this.userInfoService.findById(doc.getUserInfoId());
+    //     return String.format("Doctor: %s %s | Email: %s | Specialty: %s", userInfo.getFname(),userInfo.getLname(),userInfo.getEmail(), doc.getSpeciality());
+    // }
 }

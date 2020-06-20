@@ -6,9 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.annotation.Transient;
+import javax.persistence.Transient;
+
+
 
 @Entity
 @Table(name = "user_info")
@@ -19,24 +19,28 @@ public class UserInfo {
 	private Integer id;
 
 	@Column(name = "email")
-	@Email(message = "Please provide a valid e-mail")
-	@NotEmpty(message = "Please provide an e-mail")
 	private String email;
-	
+
 	@Column(name = "fname")
-	@NotEmpty(message = "Please provide your first name")
 	private String fname;
 
 	@Column(name = "lname")
-	@NotEmpty(message = "Please provide your last name")
 	private String lname;
 
 	@Column(name = "role")
 	private String role;
 
 	@Column(name = "password")
-	@Transient
+	@org.springframework.data.annotation.Transient
 	private String password;
+
+
+	@Transient
+	private String testing;
+
+	public String getTesting() {
+		return this.testing;
+	}
 
 	public Integer getId() {
 		return this.id;
@@ -58,27 +62,32 @@ public class UserInfo {
 		return this.role;
 	}
 
+	// setters
+	public void setTesting(final String testing) {
+		this.testing = testing;
+	}
+
 	public String getPassword() {
 		return this.password;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 
-	public void setFname(String fname) {
+	public void setFname(final String fname) {
 		this.fname = fname;
 	}
 
-	public void setLname(String lname) {
+	public void setLname(final String lname) {
 		this.lname = lname;
 	}
 
-	public void setRole(String role) {
+	public void setRole(final String role) {
 		this.role = role;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 

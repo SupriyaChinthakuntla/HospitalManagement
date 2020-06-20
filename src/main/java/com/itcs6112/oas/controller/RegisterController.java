@@ -1,6 +1,7 @@
 package com.itcs6112.oas.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,19 +12,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.itcs6112.oas.model.PatientInfo;
 import com.itcs6112.oas.model.UserInfo;
+import com.itcs6112.oas.service.PatientInfoService;
 import com.itcs6112.oas.service.UserInfoService;
 
 @Controller
 public class RegisterController {
 
-	private UserInfoService userInfoService;
-
 	@Autowired
+	private UserInfoService userInfoService;
+	@Autowired
+	private PatientInfoService patientInfoService;
+	
 	public RegisterController(UserInfoService userInfoService) {
 		this.userInfoService = userInfoService;
 	}
@@ -35,7 +38,7 @@ public class RegisterController {
 
 		// Already authenticated, forward to /
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			modelAndView.setViewName("redirect:/");
+			modelAndView.setViewName("redirect:/doctors");
 		}
 		// Not yet authenticated
 		else {
@@ -61,8 +64,12 @@ public class RegisterController {
 		} 
 		// If successful, send to login page to log in
 		else {
-			userInfo.setRole("patient");
 			userInfoService.saveUser(userInfo);
+			PatientInfo p  = new PatientInfo();		// when we register this way, we are creating patients, create patient object
+			p.setDOB(new Date(12,12,1990));			// need to find a way to get the date here
+			p.setUserInfoId(userInfo.getId());				// associate the newly created user with patient data
+			userInfo.setRole("patient");
+			patientInfoService.savePatient(p);
 			modelAndView.addObject("registrationSuccessMessage", "Patient successfully registered!");
 			modelAndView.setViewName("register");
 		}

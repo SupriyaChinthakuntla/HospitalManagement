@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <!-- Bootstrap core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"/>
+    <!-- jQuery-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
+<style>
+    /*div {*/
+    /*    padding-top: 20px;*/
+    /*    padding-bottom: 20px;*/
+    /*    padding-left: 20px;*/
+    /*}*/
+</style>
+</head>
+<body>
+    <h2>OAS Patient</h2>
+<div class="container-fluid m-4">
+<a href="#" th:href="@{'/doctors'}">Schedule new appointment</a>
+<br>
+<br>
+    <h1 class="display-4 mb-3">Future Appointments</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Doctor Name</th>
+            <th scope="col">Appointment Time</th>
+            <th scope="col">Reason for Visit</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments_future}">
+            <td th:text="${docInfoService.getDoctorName(appointment.getDoctorId())}"></td>
+<!--            <td th:text="${appointment.getDoctorId()}"></td>-->
+            <td th:text="${appointment.getStartDate()}"></td>
+            <td th:text="${appointment.getReasonForVisit()}"></td>
+<!--            //<a th:href="@{'/category/edit/' + ${category.idCategory}}">view</a>-->
+            <td><a href="#" th:href="@{'/appointments/' + ${appointment.getId()} + '/cancel'}" class="btn btn-sm btn-danger">Cancel</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+<div class="container-fluid m-4">
+    <h1 class="display-4 mb-3">Past Appointments</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Doctor Name</th>
+            <th scope="col">Appointment Time</th>
+            <th scope="col">Reason for Visit</th>
+            <th scope="col">Doctor Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="appointment : ${appointments_past}">
+            <td th:text="${docInfoService.getDoctorName(appointment.getDoctorId())}"></td>
+            <td th:text="${appointment.getStartDate()}"></td>
+            <td th:text="${appointment.getReasonForVisit()}"></td>
+            <td th:text="${appointment.getNotes()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    <div class="margin-top20 text-center">
+        <a th:href="@{/logout}">Logout</a>
+    </div>
+</body>
+</html>
